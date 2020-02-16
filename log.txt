@@ -1,0 +1,11 @@
+commit 6626bfef224164e68b28df9da3fbc675e16252bc (HEAD -> master)
+Author: ktsirul <katya.tsirul.01@icloud.com>
+Date:   Sun Feb 16 17:42:36 2020 +0300
+
+    add status.txt
+
+commit 486649cfef7bc098e13baeb7aae0aa3f28cb22b1
+Author: ktsirul <katya.tsirul.01@icloud.com>
+Date:   Sun Feb 16 17:32:02 2020 +0300
+
+    add .gitignore
