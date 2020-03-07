@@ -6,39 +6,16 @@ body {
     margin: 0%;
 }
 
-#header {
-    left: 0%;
-    right: auto;
-    position:absolute;
+header {
+    margin: 0%;
     width: 100%;
-    height: 20%;
-    min-height: 100px;
-    top:0%;
     opacity: 0.8;
     background: radial-gradient(circle at center, #0844a4 200px, white 201px, #0844a4 100%);;
 }
-#footer{
-    color: #033076;
-    width:100%;
-    margin: 0px;
-    min-height: 30px;
-    font-weight: normal;
-    font-family: Bookman, URW Bookman L, serif;
-    background: #91b1fb;
-}
-.icon{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    left: 20px;
-    border-radius: 10px;
-    background: #bacee9;
-}
 
 h1 {
-    margin-left: 1%;
-    margin-right: auto;
-    margin-top: 3%;
+    margin: 0%;
+    padding: 2%;
     color: #ffffff;
     font-size: 65px;
     font-family: Times, Times New Roman, serif;
@@ -46,35 +23,98 @@ h1 {
     text-align: center;
     border: 4px;
 }
-h {
-    color: #3d8af7;
+
+.field-user{
+    margin-top: 0%;
+    padding-left: 2%;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    border: 3px ridge #2e76d6;
+}
+
+.field-user div:first-child {
+    flex: 1;
+    color: #033076;
     font-family: Helvetica, sans-serif;
     font-weight: normal;
 }
+
+.field-user div{
+    display:flex;
+   align-items: center;
+}
+
+.avatar{
+    margin: 1% 3% 1% 0%;
+    display: inline-block;
+    height : 50px;
+    width : 50px;
+    border-radius: 10px;
+}
+
 button {
     border-radius: 5px;
-    opacity: 0.7;
     background: #caddfe;
 }
 
-#border{
-    position:absolute;
-    top: 29%;
-    left: 0%;
-    width: 100%;
-    height: 0.5%;
-    opacity: 0.7;
-    background: #2e76d6;
+.button-add{
+    min-width: 100px;
+    min-height: 30px;
+    margin-right: 5px;
+    border: 2px ridge #033076;
 }
 
-#news-line {
-    border-radius: 20px;
-    margin-right: 10%;
-    margin-top: 5%;
-    margin-left: 20%;
-    margin-bottom: 0%;
-    padding: 20px;
-    background: #caddfe;
+.button-log{
+    min-width: 100px;
+    min-height: 30px;
+    margin-right: 5px;
+    border: 2px ridge #033076;
+}
+
+.mobile-filtering {
+    display: none;
+    margin: 10px 0px 1px 0px;
+}
+
+.filters-selected{
+    flex: 1;
+    margin-top: 2%;
+    margin-left: 7%;
+    color: #033076;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+span{
+    margin-left: 1%;
+    color: #033076;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+.main-field{
+    display: flex;
+}
+.filtering{
+    margin-left: 2%;
+    flex: 1;
+    width: fit-content;
+    font-size: 15px;
+    display: inline-block;
+}
+
+h2{
+    color: #033076;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+.add-filter{
+    height: 30px;
+    width: 120px;
+    margin-top: 10px;
+    border: 2px ridge #033076;
 }
 
 p {
@@ -82,52 +122,13 @@ p {
     font-family: Helvetica, sans-serif;
     font-weight: normal;
 }
-h2{
-    color: #033076;
-    font-family: Helvetica, sans-serif;
-    font-weight: normal;
-}
 
-
-span{
-    color: #033076;
-    font-family: Helvetica, sans-serif;
-    font-weight: normal;
-    font-size: 20px;
-}
-.button-add{
-    position:absolute;
-    right: 12%;
-    top:22.5%;
-    width: 9%;
-    height: 4%;
-    border: 2px ridge #033076;
-    min-height: 30px;
-    min-width: 60px;
-}
-
-.button-log{
-    position:absolute;
-    right: 2%;
-    top:22.5%;
-    width: 9%;
-    height: 4%;
-    border: 2px ridge #033076;
-    min-height: 30px;
-    min-width: 60px;
-}
-
-.user{
-    margin-top: calc(7.5rem + 5vw);
-    margin-left: 4%;
-    font-size: 20px;
-}
-
-.filtering{
-    position: absolute;
-    left: 5%;
-    top: 30%;
-    font-size: 15px;
+#news-line {
+    border-radius: 20px;
+    margin: 3% 5% 0px 5%;
+    width: fit-content;
+    padding: 20px;
+    background: #caddfe;
 }
 
 .post{
@@ -136,31 +137,77 @@ span{
     padding: 20px;
     background: #fcf8fb;
     border-radius: 20px;
-    padding-left: 80px;
     border: 3px ridge #033076;
 }
-.post-date{
-    padding-left: 75%;
-    float: right;
+
+.post-header {
+    display: flex;
+    align-items: baseline;
 }
+
+.post div{
+    display: flex;
+    align-items: center;
+}
+
 .user-button{
     float: right;
-    margin-top: 0px;
+    margin: 0px 5px;
     min-height: 30px;
-    min-width: 60px;
-}
-.post button{
-    height: 30px;
-    width: 120px;
-    margin-top: 10px;
+    min-width: 100px;
     border: 2px ridge #033076;
+    display: inline-block;
 }
+
+.username{
+    flex: 1;
+    font-size: 20px;
+    color: #033076;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+.icon{
+    display: inline-block;
+    margin-right: 2%;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: #bacee9;
+}
+
+h5 {
+    color: #3d8af7;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
 .post-footer{
     display: flex;
     align-items: center;
 }
-.post-footer .left{
+
+.like{
     flex: 1;
+    font-size: 25px;
+    margin-left: 5px;
+    color: #0844a4;
+}
+
+.like-pressed{
+    flex: 1;
+    font-size: 25px;
+    margin-left: 5px;
+    color: #e61610;
+}
+
+.post-date{
+    float: right;
+    margin-right: 5px;
+    margin-left: 28px;
 }
 
 .button-load{
@@ -176,20 +223,56 @@ span{
     margin: auto;
 }
 
-.add-filter{
-    height: 30px;
-    width: 120px;
-    margin-top: 10px;
-    border: 2px ridge #033076;
-}
-.post-header {
-    display: flex;
-    align-items: baseline;
-}
-.username{
-    flex: 1;
-    font-size: 20px;
+h4{
     color: #033076;
-    font-family: Helvetica, sans-serif;
+    margin: 0 5% 0 5%;
     font-weight: normal;
+    font-size: 20px;
+    font-family: Bookman, URW Bookman L, serif;
+}
+
+
+footer{
+    background: #91b1fb;
+    width:100%;
+    margin: 0px;
+    min-height: 55px;
+    text-align: center;
+}
+
+
+@media only screen and (max-width: 700px) {
+.images{
+    width: 200px;
+    height: 200px;
+}
+    .user-button{
+        margin-right: 1%;
+        margin-left: 1%;
+        min-width:84px;
+        min-height: 32px;
+        text-align: center;
+    }
+    .filtering{
+        display: none;
+    }
+
+    .mobile-filtering {
+        display: flex;
+        margin:3% 0% 0%;
+    }
+
+    .mobile-filtering--button{
+        margin-right: 7%;
+        width: 35px;
+        height: 35px;
+    }
+
+    .username{
+        margin-right: 2%;
+    }
+
+    .post-header{
+        flex-direction: column;
+    }
 }

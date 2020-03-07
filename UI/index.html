@@ -3,26 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Sweet Tweet</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/solid.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta name="viewport" content="width, initial-scale=1.0">
 </head>
+
 <body>
 <header>
-    <div id="header">  <h1> Sweet Tweet </h1> </div>
-    <p class="user"> Alexander T </p>
-    <div id="border"> </div>
+     <h1> Sweet Tweet </h1>
 </header>
 <main>
+    <div class="field-user">
+        <div>
+            <img class="avatar" src="91e83b00c27bf4d5bb849a6ac2b81fe5.jpg">
+            Alexander T
+        </div>
+        <div>
+            <span><button class = "button-add">Add post</button></span>
+            <span><button class = "button-log">Log out</button></span>
+        </div>
+    </div>
+
+    <div class="mobile-filtering">
+        <div class="filters-selected">Filters that are used</div>
+        <button class="mobile-filtering--button">
+            <i class="fas fa-filter"></i>
+        </button>
+    </div>
+<div class="main-field">
+    <div class="filtering"> <h2> Filtering posts</h2>
+        <p>
+            <input type="checkbox" id="author"><label for="author">Authors</label><br/><br/>
+            <input type="text" placeholder="Input author"><br/>
+            <button class="add-filter">+Add more</button><br/><br/>
+            <input type="checkbox" id="date"><label for="date">Date</label><br/><br/>
+            <input type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY"><br/><br/>
+            <input type="checkbox" id="hashtag"><label for="hashtag">Hashtag</label><br/><br/>
+            <input type="text" placeholder="Input hashtag"><br/>
+            <button class="add-filter">+Add more</button><br/><br/>
+        </p>
+    </div>
+
     <div id="news-line">
         <div class="post">
             <div class="post-header">
                 <div class="username">
-                    Alexander T
-                </div>
-                <div class="user-buttons">
-                    <form>
-                        <button class="user-button">Edit Post</button>
-                        <button class="user-button"> Delete Post </button>
-                    </form>
+                    <img class="avatar" src="91e83b00c27bf4d5bb849a6ac2b81fe5.jpg"/>
+                    Alexander T </div>
+                <div>
+                    <button class="user-button">Edit Post</button>
+                    <button class="user-button"> Delete Post </button>
                 </div>
             </div>
             <p>
@@ -31,190 +62,178 @@
                 blues music has had a huge influence on American popular music
                 up to the present days.
             </p>
-            <br><h>#music #america #bluise</h><br/>
+            <h5>#music #america #bluise</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>209</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 22, 2020 20:40 </p>
-                </div>
+                <p class="post-date"> On February 22, 2020 20:40 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Leopold </span>
+            <div>
+                <div class="icon"></div>
+                <span> Leopold </span>
+            </div>
             <p>Kids, let's all get along!</p>
-            <h>#friendly #cat #sweety</h><br/>
+            <h5>#friendly #cat #sweety</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>453</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 22, 2020 18:14 </p>
-                </div>
+                <p class="post-date"> On February 22, 2020 18:14 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Dickens </span>
+            <div>
+                <div class="icon"></div>
+                <span> Dickens </span>
+            </div>
             <p>There is nothing in the world so irresistibly contagious as laughter and good humor.</p>﻿
-            <h>#reflections #thinkaboutit </h><br/>
+            <h5>#reflections #thinkaboutit</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>93</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 22, 2020 10:04 </p>
-                </div>
+                <p class="post-date"> On February 22, 2020 10:04 </p>
             </div>
         </div>
 
         <div class="post">
             <div class="post-header">
                 <div class="username">
-                    Alexander T
-                </div>
-                <div class="user-buttons">
-                    <form>
-                        <button class="user-button">Edit Post</button>
-                        <button class="user-button"> Delete Post </button>
-                    </form>
+                    <img class="avatar" src="91e83b00c27bf4d5bb849a6ac2b81fe5.jpg"/>
+                    Alexander T </div>
+                <div>
+                    <button class="user-button"> Edit Post </button>
+                    <button class="user-button"> Delete Post </button>
                 </div>
             </div>
             <p>The best known blues musician today is B.B. King. His fame is well-deserved.
                 Born in Indianola, Mississippi in 1925, he earned the nickname "B.B." ("Blues boy")
                 while playing on radio programs in Memphis, Tennessee.</p>
-            <h>#king #enjoy #bluise</h><br/><br/>
-            <img src="cd94b715ef23dafa68adf62f2127b260.jpg">
+            <h5>#king #enjoy #bluise</h5>
+            <img class="images" src="cd94b715ef23dafa68adf62f2127b260.jpg" />
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>103</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 21, 2020 17:18 </p>
-                </div>
+                <p class="post-date"> On February 21, 2020 17:18 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> IU </span>
+            <div>
+                <div class="icon"></div>
+                <span> IU </span>
+            </div>
             <p>When I was young, even though I received so much love,
                 I used to pay attention to people who disliked me. That's why my lyrics were so sharp and dark.</p>
-            <h>#love #lyrics </h><br/>
+            <h5>#love #lyrics</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like-pressed">
+                    <i class="fas fa-heart"></i>
+                    <span>1347</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 21, 2020 13:19 </p>
-                </div>
+                <p class="post-date"> On February 21, 2020 13:19 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Sean C </span>
+            <div>
+                <div class="icon"></div>
+                <span> Sean C </span>
+            </div>
             <p>I just think the most difficult thing to displace is privilege.</p>
-            <h>#reflections </h><br/>
+            <h5>#reflections</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>4327</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 21, 2020 8:54 </p>
-                </div>
+                <p class="post-date"> On February 21, 2020 8:54 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Leopold </span>
-            <p>I cooked dinner from jars of food that I opened myself.</p>
-            <h>#dinner #power </h><br/>
+            <div>
+                <div class="icon"></div>
+                <span> Leopold </span>
+            </div>
+            <p>I cooked dinner from jars of food t hat I opened myself.</p>
+            <h5>#dinner #power</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>58</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 20, 2020 16:23 </p>
-                </div>
+                <p class="post-date"> On February 20, 2020 16:23 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Ariana G </span>
+            <div>
+                <div class="icon"></div>
+                <span> Ariana G </span>
+            </div>
             <p>Meditation is a great way to keep my body well-centered while juggling shooting schedules and recording sessions.</p>
-            <h>#meditation #join #health</h><br/>
+            <h5>#meditation #join #health</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>911</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 20, 2020 9:37 </p>
-                </div>
+                <p class="post-date"> On February 20, 2020 9:37 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> IU </span>
+            <div>
+                <div class="icon"></div>
+                <span> IU </span>
+            </div>
             <p>I think I fell in love with Singapore.</p>
-            <h>#singapore #travelling </h><br/>
+            <h5>#singapore #travelling</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>432</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 19, 2020 23:45 </p>
-                </div>
+                <p class="post-date"> On February 19, 2020 23:45 </p>
             </div>
         </div>
 
         <div class="post">
-            <div class="icon"></div>
-            <span> Grif Hero </span>
+            <div>
+                <div class="icon"></div>
+                <span> Grif Hero </span>
+            </div>
             <p>We are the heroes of our time!</p>
-            <h>#heroes #infinite </h><br/>
+            <h5>#heroes #infinite</h5>
             <div class="post-footer">
-                <div class="right">
-                    <button>Like</button>
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>29</span>
                 </div>
-                <div class = "left">
-                    <p class="post-date"> On February 18, 2020 18:18 </p>
-                </div>
+                <p class="post-date"> On February 18, 2020 18:18 </p>
             </div>
         </div>
     </div>
-
-    <form>
-        <p><button class = "button-log">Log out</button></p>
-        <p><button class = "button-add">Add post</button></p>
-        <div class="filtering"> <h2> Filtering posts</h2>
-            <p>
-                <input type="checkbox" id="author"><label for="author">Authors</label><br/><br/>
-                <input type="text" placeholder="Input author"><br/>
-                <button class="add-filter"><ins>+Add more</ins></button><br/><br/>
-                <input type="checkbox" id="date"><label for="date">Date</label><br/><br/>
-                <input type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY"><br/><br/>
-                <input type="checkbox" id="hashtag"><label for="hashtag">Hashtag</label><br/><br/>
-                <input type="text" placeholder="Input hashtag"><br/>
-                <button class="add-filter"><ins>+Add more</ins></button><br/><br/>
-            </p>
-        </div>
-    </form>
-    <form>
+</div>
+    <div>
         <p><button class = "button-load">Load more</button></p>
-    </form>
+    </div>
 </main>
 <footer>
-    <div id="footer">
-        Sweet Tweet katya.tsirul.01@mail.ru Last changes: 24.02.2020 Creator: Ekaterina Tsirul 2 course 5 group
-    </div>
+    <h4>
+        Sweet Tweet   katya.tsirul.01@mail.ru   Last changes: 24.02.2020   Creator: Ekaterina Tsirul   2 course 5 group
+    </h4>
 </footer>
 
 </body>
