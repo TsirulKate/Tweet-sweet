@@ -1,0 +1,14 @@
+Request:Books
+I want to find the books that was published from 2003-08-24 to 2008-12-16 and George R. R. Martin wrote them.
+Result: 
+1 book "The Hedge Knight" was founded.
+
+Request:Characters
+I want to find male, alive character who is from Braavos.
+Result:
+9 characters were been founded Ezzelyno,Allaquo, Beqqo, Brusco, Cossomo, Denyo Terys,  Ferrego Antaryon, Gyloro Dothare. We can see all allowed information about them.
+
+Request:Houses
+I want to find the house that has its origins in The Riverlands. The members of this house have titles and don't have Ancestral Weapons
+Result:
+House Baelish of Harrenhal, House Blackwood of Raventree Hall, House Fisher, House Frey of Riverrun, House Frey of the Crossing, House Harroway of Harrenhal, House Lannister of Darry, House Lothston of Harrenhal, House Mallister of Seagard were been founded.

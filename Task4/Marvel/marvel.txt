@@ -1,0 +1,15 @@
+Request:Comics
+I want to find the comics that began printing in 2012.
+Result: 
+We have all comics that was began publishing in 2012(only this year).
+
+Request:Characters
+I want to find the character whose name starts with L and he was in 3 comics.
+Result:
+It is Luke Cage. You can see the information about him.
+
+Request:Creators
+I want to find the creator of comics. His first name start with Stan,last name - L, all name - S.
+
+Result:
+It is Stan Lee as you can see.

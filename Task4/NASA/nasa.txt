@@ -1,0 +1,15 @@
+Request:APOD
+I want to see astronomy picture of the 23.07.2001 with not high resolution(hd).
+Result: 
+We received json file with the description about the sky of this day.
+
+Request:Asteroids
+I want to search for Asteroids based on their closest approach date to Earth from 2014-01-27 to 2014-01-30.
+Result:
+You can see information about count, name, size, some physical characteristics and other parameters of the objects that have been observed during this period.
+
+Request:EPIC
+I want to find information on the daily imagery collected by DSCOVR's Earth Polychromatic Imaging Camera in 2015-10-31.
+
+Result:
+We can see the coordinates of the place that was photographed, when it was photographed and the image.
