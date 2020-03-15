@@ -1,14 +1,19 @@
 Request:Books
-I want to find the books that was published from 2003-08-24 to 2008-12-16 and George R. R. Martin wrote them.
-Result: 
-1 book "The Hedge Knight" was founded.
+Parameters:
+fromReleaseDate:Books that were released after, or on, the given date are included in the response.(e.g. 11-03-2001)
+toReleaseDate:Books that were released before, or on, the given date are included in the response.(e.g. 09-12-2004)
+authors:An array of names of the authors that wrote this book.
+
 
 Request:Characters
-I want to find male, alive character who is from Braavos.
-Result:
-9 characters were been founded Ezzelyno,Allaquo, Beqqo, Brusco, Cossomo, Denyo Terys,  Ferrego Antaryon, Gyloro Dothare. We can see all allowed information about them.
+Parameters:
+isAlive:Characters that are alive or dead (depending on the value) are included in the response.
+gender:Characters with the given gender are included in the response.(e.g. male,female)
+culture:Characters with the given culture are included in the response.
+
 
 Request:Houses
-I want to find the house that has its origins in The Riverlands. The members of this house have titles and don't have Ancestral Weapons
-Result:
-House Baelish of Harrenhal, House Blackwood of Raventree Hall, House Fisher, House Frey of Riverrun, House Frey of the Crossing, House Harroway of Harrenhal, House Lannister of Darry, House Lothston of Harrenhal, House Mallister of Seagard were been founded.
+Parameters:
+region:Houses that belong in the given region are included in the response.
+hasTitles:Houses that have titles (or not) are included in the response.(true or false)
+hasAncestralWeapons:Houses that have ancestral weapons (or not) are included in the response.(true or false)
