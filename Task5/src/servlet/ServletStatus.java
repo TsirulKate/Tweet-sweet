@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
 public class ServletStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try(OutputStreamWriter writer=new OutputStreamWriter(resp.getOutputStream())){
+        try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream())){
             writer.write("Application Is Running");
         }
     }

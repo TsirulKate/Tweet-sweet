@@ -11,6 +11,6 @@
     <title>$Servlets$</title>
   </head>
   <body>
-  $Kate Tsirul$
+  <span>Java Web Application</span>
   </body>
 </html>

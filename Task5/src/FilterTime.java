@@ -13,7 +13,7 @@ public class FilterTime implements Filter {
         long start = System.nanoTime();
         filterChain.doFilter(servletRequest, servletResponse);
         long end = System.nanoTime();
-        long time = Math.round(end - start);
+        long time = end - start;
         HttpServletRequest httpServReq = (HttpServletRequest)servletRequest;
         System.out.println(httpServReq.getMethod() + " - " + httpServReq.getRequestURL() + " - " + time + " nanoseconds");
     }
