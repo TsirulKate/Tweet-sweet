@@ -1,5 +1,5 @@
 let maxId;
-var posts = [
+let posts = [
     {
         id: '1',
         description: 'Work definitely comes first. I expect the same of my ideal other half too.',
@@ -175,113 +175,86 @@ var posts = [
         likes: ['Lola Skin', 'Paula', 'Egor B', 'Dean W', 'Sam W']
     }
 ];
-maxId = 20;
-
-function isInteger(num) {
-    return (num ^ 0) === num;
-}
-
-function sortByDateDescending(posts) {
-    posts.sort((p1, p2) => p1.createdAt < p2.createdAt ? 1 : -1);
-}
-
-function sortByDateAscending(posts) {
-    posts.sort((p1, p2) => p1.createdAt > p2.createdAt ? 1 : -1);
-}
 
 (function () {
+    maxId = 20;
+    function sortByDateDescending(posts) {
+        posts.sort((p1,p2) => p2.createdAt-p1.createdAt);
+    }
+
+    function sortByDateAscending(posts) {
+        posts.sort((p1,p2) => p1.createdAt-p2.createdAt);
+    }
+    
+    function filterByAuthors(posts,author) {
+        return posts.filter(function(post) {
+            return post.author===author;
+        })
+    }
+    function filterByHashTags(posts,hashTags) {
+        return posts.filter(function(post) {
+            let temp = 0;
+            for (let i = 0; i < hashTags.length; i++) {
+                if (post.hashTags.indexOf(hashTags[i]) >= 0) {
+                    temp++;
+                }
+            }
+            return temp === hashTags.length;
+        })
+    }
+    
+    function filterByDate(posts,dates) {
+        return posts.filter(function(post) {
+            return post.createdAt >= new Date(dates[0]) && post.createdAt <= new Date(dates[1]);
+        });
+    }
     function getPosts(skip = 0, top = 10, filterConfig) {
-        if (!isInteger(parseInt(skip, 10)) || !(skip >= 0) || !isInteger(parseInt(top, 10)) || !(top > 0)) {
+        if (!Number.isInteger(parseInt(skip, 10)) || !(skip >= 0) || !Number.isInteger(parseInt(top, 10)) || !(top > 0)) {
             return 'Incorrect data';
         }
-        let copy = posts.slice(0, posts.length), searching = [];
-        sortByDateDescending(copy);
+        let searching=posts.slice(0,posts.length);
+        sortByDateDescending(searching);
+        let searchingWasTryToFind=false;
         if (filterConfig === undefined) {
-            for (let i = skip; i < skip + top; i++) {
-                searching.push(copy[i]);
-            }
+            searching=searching.slice(skip,skip+top);
+            return searching;
         } else {
-            if (filterConfig.hasOwnProperty('createdAt')) {
-                for (let i = skip; i < skip + top; i++) {
-                    if (copy[i].createdAt === filterConfig.createdAt) {
-                        searching.push(copy[i]);
-                        count++;
-                    }
-                    if (count === top) {
-                        break;
-                    }
-                }
-                return searching;
+            if (filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')) {
+                let dates=[filterConfig.date_after,filterConfig.date_before];
+                searching = filterByDate(searching,dates);
+                searchingWasTryToFind=true;
             }
-            if (filterConfig.hasOwnProperty('author') && !filterConfig.hasOwnProperty('hashTags')) {
-                let count = 0;
-                for (let i = skip; i < copy.length; i++) {
-                    if (copy[i].author === filterConfig.author) {
-                        searching.push(copy[i]);
-                        count++;
-                    }
-                    if (count === top) {
-                        break;
-                    }
-                }
-                if (searching.length === 0) {
-                    return 'NO SUCH ELEMENTS';
-                }
-            } else if (filterConfig.hasOwnProperty('hashTags') && !filterConfig.hasOwnProperty('author')) {
-                let count = 0, temp = 0;
-                for (let i = skip; i < copy.length; i++) {
-                    for (let j = 0; j < filterConfig.hashTags.length; j++) {
-                        if (copy[i].hashTags.indexOf(filterConfig.hashTags[j]) >= 0) {
-                            temp++;
-                        }
-                    }
-                    if (temp === filterConfig.hashTags.length) {
-                        searching.push(copy[i]);
-                        count++;
-                    }
-                    temp = 0;
-                    if (count === top) {
-                        break;
-                    }
-                }
-                if (searching.length === 0) {
-                    return 'NO SUCH ELEMENTS';
-                }
-            } else if (filterConfig.hasOwnProperty('hashTags') && filterConfig.hasOwnProperty('author')) {
-                let count = 0, temp = 0;
-                for (let i = skip; i < copy.length; i++) {
-                    if (copy[i].author === filterConfig.author) {
-                        for (let j = 0; j < filterConfig.hashTags.length; j++) {
-                            if (copy[i].hashTags.indexOf(filterConfig.hashTags[j]) >= 0) {
-                                temp++;
-                            }
-                        }
-                        if (temp === filterConfig.hashTags.length) {
-                            searching.push(copy[i]);
-                            count++;
-                        }
-                        temp = 0;
-                        if (count === top) {
-                            break;
-                        }
-                    }
-                }
-                if (searching.length === 0) {
-                    return 'NO SUCH ELEMENTS';
-                }
-            } else {
+            if (filterConfig.hasOwnProperty('author')) {
+                searching = filterByAuthors(searching,filterConfig.author);
+                searchingWasTryToFind=true;
+            }
+            if (filterConfig.hasOwnProperty('hashTags')) {
+                searching = filterByHashTags(searching,filterConfig.hashTags);
+                searchingWasTryToFind=true;
+            }
+            else if(!filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before')
+                && !filterConfig.hasOwnProperty('author') && !filterConfig.hasOwnProperty('hashTags')) {
                 return 'Incorrect data';
             }
+            if(filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before') ||
+                !filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')){
+                return 'Incorrect data';
+            }
+
         }
+        if(searching.length === 0 || !searchingWasTryToFind){
+            return 'NO SUCH ELEMENTS';
+        }
+        searching=searching.slice(skip,skip+top);
         return searching;
     }
 
     function getPost(id) {
-        if (!isInteger(parseInt(id, 10))) {
+        if (!Number.isInteger(parseInt(id, 10))) {
             return 'Incorrect data';
         }
-        if (isInteger(parseInt(id, 10)) && id > 0) {
-            for (var i = 0; i < posts.length; i++) {
+        if (Number.isInteger(parseInt(id, 10)) && id > 0) {
+            for (let i = 0; i < posts.length; i++) {
                 if (parseInt(id, 10) === parseInt(posts[i].id, 10)) {
                     return posts[i];
                 }
@@ -297,15 +270,13 @@ function sortByDateAscending(posts) {
             return 'Incorrect data';
         } else if (typeof post.description != "string") {
             return false;
-        } else if (toString.call(post.createdAt) != "[object Date]") {
+        } else if (toString.call(post.createdAt) !== "[object Date]") {
             return false;
         } else if (typeof post.author != "string") {
             return false;
-        } else if (toString.call(post.hashTags) != "[object Array]") {
+        } else if (toString.call(post.hashTags) !== "[object Array]") {
             return false;
-        } else if (toString.call(post.likes) != "[object Array]") {
-            return false;
-        } else return true;
+        } else return toString.call(post.likes) === "[object Array]";
     }
 
     function addPost(post) {
@@ -315,11 +286,11 @@ function sortByDateAscending(posts) {
         if (!validatePost(post))
             return false;
         posts.push(post);
-        return getPost(post.id) != 'NO POST';
+        return getPost(post.id) !== 'NO POST';
     }
 
     function editPost(id, post) {
-        if (typeof post != 'object' || !isInteger(parseInt(id, 10))) {
+        if (typeof post != 'object' || !Number.isInteger(parseInt(id, 10))) {
             return 'Incorrect data';
         }
         let postToEdit = getPost(parseInt(id, 10) - 1);
@@ -336,23 +307,47 @@ function sortByDateAscending(posts) {
     }
 
     function removePost(id) {
-        if (!isInteger(parseInt(id, 10))) {
+        if (!Number.isInteger(parseInt(id, 10))) {
             return 'Incorrect data';
         }
         posts.splice(parseInt(id, 10) - 1, 1);
         return getPost(id) == 'NO POST';
     }
 
+    console.log(getPosts());
+    console.log(getPosts(5,4));
+    console.log(getPosts(0,5,{date_after:'2020-02-13T00:00:00', date_before:'2020-02-20T00:00:00'}));
+    console.log(getPosts(0,5,{date_after:'2020-02-13T00:00:00', date_before:'2020-02-20T00:00:00', author:'Alexander T'}));
+    console.log(getPosts(0,15,{date_after:'2020-02-13T00:00:00', date_before:'2020-02-20T00:00:00', author:'Alexander T', hashTags:['#music']}));
+    console.log(getPosts(0,5,{date_after:'2020-02-13T00:00:00', date_before:'2020-02-20T00:00:00', hashTags:['#ideal']}));
     console.log(getPosts(0, 10, {author: 'IU', hashTags: ['#love']}));
     console.log(getPosts(0, 10, {author: 'IU'}));
     console.log(getPosts(0, 10, {hashTags: ['#love']}));
+
+    console.log(getPosts(0,5,{ date_after:'2020-02-13T00:00:00'}));
+    console.log(getPosts(0,20,{kwbke:'kejb'}));
+
     console.log(getPost('3'));
+
     console.log('The posts[10] is validate: ' + validatePost(posts[10]));
+    console.log('The posts is validate(should be false): ' + validatePost({
+        id: 1,
+        description: 'Hello',
+        createdAt: new Date('2020-03-21T09:34:15'),
+        author: 'Alexander T',
+        photoLink: 'https://img.stereo.ru/article-covers/2018/cd94b715ef23dafa68adf62f2127b260.jpg'
+    }));
+
     console.log('The post with 17 id was remove: ' + removePost('17'));
+
     console.log('The post with 3 id was edit: ' + editPost('3', {
         description: 'ljnla',
         hashTags: ['#ljds', '#sldsnl']
     }));
+    console.log('The post with 5 id was edit(should be false): ' + editPost('5', {
+        hashTags: '#lol'
+    }));
+
     console.log('The new post was added: ' + addPost({
         id: ++maxId,
         description: 'The best known blues musician today is B.B. King. His fame is well-deserved.\n' +
@@ -363,6 +358,13 @@ function sortByDateAscending(posts) {
         photoLink: 'https://img.stereo.ru/article-covers/2018/cd94b715ef23dafa68adf62f2127b260.jpg',
         hashTags: ['#king', '#enjoy', '#bluise'],
         likes: []
+    }));
+    console.log('The new post was added(should be false): ' + addPost({
+        id: ++maxId,
+        description: 'The best known blues musician today is B.B. King. His fame is well-deserved.\n' +
+            '                Born in Indianola, Mississippi in 1925, he earned the nickname "B.B." ("Blues boy")\n' +
+            '                while playing on radio programs in Memphis, Tennessee.',
+        createdAt: new Date('2020-03-21T09:34:15')
     }));
 })();
 
