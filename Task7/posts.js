@@ -20,15 +20,7 @@ class TweetList{
         })
     }
     _filterByHashTags(posts,hashTags) {
-        return posts.filter(function(post) {
-            let temp = 0;
-            for (let i = 0; i < hashTags.length; i++) {
-                if (post.hashTags.indexOf(hashTags[i]) >= 0) {
-                    temp++;
-                }
-            }
-            return temp === hashTags.length;
-        })
+        return posts.filter(post => hashTags.every(tag => post.hashTags.includes(tag)));
     }
 
     _filterByDate(posts,dates) {
@@ -37,7 +29,7 @@ class TweetList{
         });
     }
     getPosts(skip = 0, top = 10, filterConfig) {
-        if (!Number.isInteger(parseInt(skip, 10)) || !(skip >= 0) || !Number.isInteger(parseInt(top, 10)) || !(top > 0)) {
+        if (!Number.isInteger(parseInt(skip, 10)) || skip < 0 || !Number.isInteger(parseInt(top, 10)) || top <= 0) {
             return 'Incorrect data';
         }
         let searching=this._posts.slice(0,this._posts.length);
@@ -296,6 +288,56 @@ let posts = [
 ];
 
 let tweetList = new TweetList(posts);
+let posts1 = [{
+    id: '16',
+    description: 'When I was young, even though I received so much love,\n' +
+        '                I used to pay attention to people who disliked me. That\'s why my lyrics were so sharp and dark.',
+    createdAt: new Date('2020-02-20T23:48:05'),
+    author: 'IU',
+    hashTags: ['#love', '#lyrics'],
+    likes: ['Lola Skin', 'Paula', 'Egor B', 'Marie Curie', 'Dean W', 'Sam W']
+},
+    {
+        id: '17',
+        description: 'The best known blues musician today is B.B. King. His fame is well-deserved.\n' +
+            '                Born in Indianola, Mississippi in 1925, he earned the nickname "B.B." ("Blues boy")\n' +
+            '                while playing on radio programs in Memphis, Tennessee.',
+        createdAt: new Date('2020-02-21T07:32:15'),
+        author: 'Alexander T',
+        photoLink: 'https://img.stereo.ru/article-covers/2018/cd94b715ef23dafa68adf62f2127b260.jpg',
+        hashTags: ['#king', '#enjoy', '#bluise'],
+        likes: ['Sean C', 'Egor B', 'Vlad K', 'Sam W']
+    },
+    {
+        id: '18',
+        description: 'There is nothing in the world so irresistibly contagious as laughter and good humor.',
+        createdAt: new Date('2020-02-21T10:14:00'),
+        author: 'Dickens',
+        hashTags: ['#reflections', '#thinkaboutit'],
+        likes: ['Lola', 'Paula', 'Egor B', 'Dean W', 'Sam W']
+    },
+    {
+        id: '19',
+        description: 'Kids, let\'s all get along!',
+        createdAt: new Date('2020-02-22T15:34:10'),
+        author: 'Leopold',
+        hashTags: ['#friendly', '#cat', '#sweety'],
+        likes: ['Kinnoske', 'Paula', 'Egor B', 'Dean W', 'Sam W']
+    },
+    {
+        id: '20',
+        description: 'America’s music culture would be incomplete without\n' +
+            '                blues music. Thought it was created in the early decades of the 20th century,\n' +
+            '                blues music has had a huge influence on American popular music\n' +
+            '                up to the present days. ',
+        createdAt: new Date('2020-02-22T20:40:00'),
+        author: 'Alexander T',
+        hashTags: ['#music', '#america', '#bluise'],
+        likes: ['Lola Skin', 'Paula', 'Egor B', 'Dean W', 'Sam W']
+    }];
+console.log('Posts from the posts1 that are not validate:' );
+console.log(tweetList.addAll(posts1));
+
 console.log(tweetList.getPosts());
 console.log(tweetList.getPosts(5,4));
 console.log(tweetList.getPosts(0,5,{date_after:'2020-02-13T00:00:00', date_before:'2020-02-20T00:00:00'}));
@@ -349,54 +391,5 @@ console.log('The new post was added(should be false): ' + tweetList.addPost({
     createdAt: new Date('2020-03-21T09:34:15')
 }));
 
-let posts1 = [{
-    id: '16',
-    description: 'When I was young, even though I received so much love,\n' +
-        '                I used to pay attention to people who disliked me. That\'s why my lyrics were so sharp and dark.',
-    createdAt: new Date('2020-02-20T23:48:05'),
-    author: 'IU',
-    hashTags: ['#love', '#lyrics'],
-    likes: ['Lola Skin', 'Paula', 'Egor B', 'Marie Curie', 'Dean W', 'Sam W']
-},
-    {
-        id: '17',
-        description: 'The best known blues musician today is B.B. King. His fame is well-deserved.\n' +
-            '                Born in Indianola, Mississippi in 1925, he earned the nickname "B.B." ("Blues boy")\n' +
-            '                while playing on radio programs in Memphis, Tennessee.',
-        createdAt: new Date('2020-02-21T07:32:15'),
-        author: 'Alexander T',
-        photoLink: 'https://img.stereo.ru/article-covers/2018/cd94b715ef23dafa68adf62f2127b260.jpg',
-        hashTags: ['#king', '#enjoy', '#bluise'],
-        likes: ['Sean C', 'Egor B', 'Vlad K', 'Sam W']
-    },
-    {
-        id: '18',
-        description: 'There is nothing in the world so irresistibly contagious as laughter and good humor.',
-        createdAt: new Date('2020-02-21T10:14:00'),
-        author: 'Dickens',
-        hashTags: ['#reflections', '#thinkaboutit'],
-        likes: ['Lola', 'Paula', 'Egor B', 'Dean W', 'Sam W']
-    },
-    {
-        id: '19',
-        description: 'Kids, let\'s all get along!',
-        createdAt: new Date('2020-02-22T15:34:10'),
-        author: 'Leopold',
-        hashTags: ['#friendly', '#cat', '#sweety'],
-        likes: ['Kinnoske', 'Paula', 'Egor B', 'Dean W', 'Sam W']
-    },
-    {
-        id: '20',
-        description: 'America’s music culture would be incomplete without\n' +
-            '                blues music. Thought it was created in the early decades of the 20th century,\n' +
-            '                blues music has had a huge influence on American popular music\n' +
-            '                up to the present days. ',
-        createdAt: new Date('2020-02-22T20:40:00'),
-        author: 'Alexander T',
-        hashTags: ['#music', '#america', '#bluise'],
-        likes: ['Lola Skin', 'Paula', 'Egor B', 'Dean W', 'Sam W']
-    }];
-console.log('Posts from the posts1 that are not validate:' );
-console.log(tweetList.addAll(posts1));
 tweetList.clear();
 console.log(tweetList.getPost('0'));
