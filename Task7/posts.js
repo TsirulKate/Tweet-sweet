@@ -32,9 +32,11 @@ class TweetList{
         if (!Number.isInteger(parseInt(skip, 10)) || skip < 0 || !Number.isInteger(parseInt(top, 10)) || top <= 0) {
             return 'Incorrect data';
         }
+
         let searching=this._posts.slice(0,this._posts.length);
         TweetList.sortByDateDescending(searching);
         let searchingWasTryToFind=false;
+
         if (filterConfig === undefined) {
             searching=searching.slice(skip,skip+top);
             return searching;
@@ -44,35 +46,40 @@ class TweetList{
                 searching = this._filterByDate(searching,dates);
                 searchingWasTryToFind=true;
             }
+
             if (filterConfig.hasOwnProperty('author')) {
                 searching = this._filterByAuthors(searching,filterConfig.author);
                 searchingWasTryToFind=true;
             }
+
             if (filterConfig.hasOwnProperty('hashTags')) {
                 searching = this._filterByHashTags(searching,filterConfig.hashTags);
                 searchingWasTryToFind=true;
             }
+
             else if(!filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before')
                 && !filterConfig.hasOwnProperty('author') && !filterConfig.hasOwnProperty('hashTags')) {
                 return 'Incorrect data';
             }
+
             if(filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before') ||
                 !filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')){
                 return 'Incorrect data';
             }
-
         }
+
         if(searching.length === 0 || !searchingWasTryToFind){
             return 'NO SUCH ELEMENTS';
         }
+
         searching=searching.slice(skip,skip+top);
         return searching;
     }
 
-    getPost(id) {
-        if (Number.isInteger(parseInt(id, 10)) && id >= 0) {
+    getPost(postID) {
+        if (Number.isInteger(parseInt(postID, 10)) && postID >= 0) {
             for (let i = 0; i < this._posts.length; i++) {
-                if (parseInt(id, 10) === parseInt(this._posts[i].id, 10)) {
+                if (parseInt(postID, 10) === parseInt(this._posts[i].id, 10)) {
                     return this._posts[i];
                 }
             }
@@ -100,51 +107,111 @@ class TweetList{
         if (typeof post != 'object') {
             return 'Incorrect data';
         }
-        if (!TweetList.validatePost(post))
+
+        if (!TweetList.validatePost(post)) {
             return false;
+        }
+
         this._posts.push(post);
+
         if(this.getPost(post.id) !== 'NO POST'){
             this._availableId++;
         }
+
         return this.getPost(post.id) !== 'NO POST';
     }
 
-    editPost(id, post) {
-        if (typeof post != 'object' || !Number.isInteger(parseInt(id, 10))) {
+    editPost(postID, post) {
+        if (typeof post != 'object' || !Number.isInteger(parseInt(postID, 10))) {
             return 'Incorrect data';
         }
-        let postToEdit = this.getPost(parseInt(id, 10) - 1);
+
+        let postToEdit = this.getPost(parseInt(postID, 10) - 1);
+
         if (post.hasOwnProperty('description')) {
             postToEdit.description = post.description;
         }
+
         if (post.hasOwnProperty('hashTags')) {
             postToEdit.hashTags = post.hashTags;
         }
+
         if (post.hasOwnProperty('photoLink')) {
             postToEdit.photoLink = post.photoLink;
         }
+
         return TweetList.validatePost(postToEdit);
     }
 
-    removePost(id) {
-        if (!Number.isInteger(parseInt(id, 10))) {
+    removePost(postID) {
+        if (!Number.isInteger(parseInt(postID, 10))) {
             return 'Incorrect data';
         }
-        this._posts.splice(parseInt(id, 10) - 1, 1);
-        return this.getPost(id) == 'NO POST';
+
+        this._posts.splice(parseInt(postID, 10) - 1, 1);
+        return this.getPost(postID) == 'NO POST';
     }
 
     addAll(posts){
         let noValidatePosts=[];
-        for(let i=0;i<posts.length;i++){
-            if(TweetList.validatePost(posts[i])){
-                this.addPost(posts[i]);
+
+        const reducer = (accumulator, currentValue) => {
+            if(TweetList.validatePost(currentValue)){
+                this.addPost(currentValue);
             }
             else{
-                noValidatePosts.push(posts[i]);
+                accumulator.push(currentValue);
             }
-        }
+            return accumulator;
+        };
+        noValidatePosts = posts.reduce(reducer,[]);
         return noValidatePosts;
+    }
+
+    addLike(postID,user_name){
+
+        if (!Number.isInteger(parseInt(postID, 10))) {
+            return false;
+        }
+
+        const post = this.getPost(postID);
+
+        if (!post) {
+            return false;
+        }
+
+        if (TweetList.validatePost(post) && post.likes.includes(user_name)) {
+            return false;
+        }
+
+        const indexOfPost=this._posts.indexOf(post);
+        const likes = (post.likes || []).concat([user_name]);
+
+        this._posts[indexOfPost].likes=likes;
+        return true;
+    }
+
+    removeLike(postID,user_name){
+        if (!Number.isInteger(parseInt(postID, 10))) {
+            return false;
+        }
+
+        const post = this.getPost(postID);
+
+        if (!post) {
+            return false;
+        }
+
+        if (TweetList.validatePost(post) && !post.likes.includes(user_name)) {
+            return false;
+        }
+
+        const indexOfLike = post.likes.indexOf(user_name);
+        const likes = post.likes.splice(indexOfLike,1);
+        const indexOfPost=this._posts.indexOf(post);
+
+        this._posts[indexOfPost].likes=likes;
+        return true;
     }
 
     clear(){
@@ -390,6 +457,9 @@ console.log('The new post was added(should be false): ' + tweetList.addPost({
         '                while playing on radio programs in Memphis, Tennessee.',
     createdAt: new Date('2020-03-21T09:34:15')
 }));
+
+console.log('The 3 post was liked: ' + tweetList.addLike('3','Kate'));
+console.log('The 3 post was unliked: ' + tweetList.removeLike('3','Kate'));
 
 tweetList.clear();
 console.log(tweetList.getPost('0'));
