@@ -74,6 +74,32 @@
 
   <!-- Servlets for Task 8 -->
 
+  <servlet>
+    <servlet-name>ServletPosts</servlet-name>
+    <servlet-class>servletsForPosts.ServletPosts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletPosts</servlet-name>
+    <url-pattern>/tweets</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ServletTweetList</servlet-name>
+    <servlet-class>servletsForPosts.ServletTweetList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletTweetList</servlet-name>
+    <url-pattern>/tweets/search</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ServletInitPosts</servlet-name>
+    <servlet-class>servletsForPosts.ServletInitPosts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletInitPosts</servlet-name>
+    <url-pattern>/init</url-pattern>
+  </servlet-mapping>
 
   <!-- End Task 8 -->
 </web-app>

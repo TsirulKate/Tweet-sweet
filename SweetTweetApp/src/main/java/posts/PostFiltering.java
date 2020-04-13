@@ -1,14 +1,15 @@
 package posts;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class PostFiltering {
-    private Date dateAfter;
-    private Date dateBefore;
+    private LocalDateTime dateAfter;
+    private LocalDateTime dateBefore;
     private String author;
     private String[] hashTags;
 
-    public PostFiltering(Date dateAfter, Date dateBefore, String author, String[] hashTags) {
+    public PostFiltering(LocalDateTime dateAfter, LocalDateTime dateBefore, String author, String[] hashTags) {
         this.dateAfter = dateAfter;
         this.dateBefore = dateBefore;
         this.author = author;
@@ -23,16 +24,18 @@ public class PostFiltering {
     }
 
     public boolean filtering(Post post){
-        if(this.dateAfter!=null && !post.getCreatedAt().after(this.dateAfter)){
+        if(this.dateAfter!=null && !this.dateAfter.isBefore(post.getCreatedAt())){
             return false;
         }
-        if (this.dateBefore != null && !post.getCreatedAt().before(this.dateBefore)) {
+        if (this.dateBefore != null && !this.dateBefore.isAfter(post.getCreatedAt())) {
             return false;
         }
         if(this.author!=null && !post.getAuthor().equals(this.author)){
             return false;
         }
-        if(this.hashTags != null && )
+        if(this.hashTags != null && (post.getHashTags().isEmpty() || !post.getHashTags().contains(this.hashTags))){
+            return false;
+        }
         return true;
     }
 

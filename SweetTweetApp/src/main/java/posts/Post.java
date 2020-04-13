@@ -1,17 +1,22 @@
 package posts;
 
+import com.google.gson.GsonBuilder;
+import servletsForPosts.WorkWithJSON;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 public final class Post {
     private String id;
     private String description;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private String author;
     private String photoLink;
-    private String[] hashTags;
-    private String[] likes;
+    private ArrayList<String> hashTags;
+    private ArrayList<String> likes;
 
-    public Post(String id, String description, Date createdAt, String author, String photoLink, String[] hashTags, String[] likes) {
+    public Post(String id, String description, LocalDateTime createdAt, String author, String photoLink, ArrayList<String> hashTags, ArrayList<String> likes) {
         this.id = id;
         this.description = description;
         this.createdAt = createdAt;
@@ -43,7 +48,7 @@ public final class Post {
         this.description = description;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -63,19 +68,35 @@ public final class Post {
         this.photoLink = photoLink;
     }
 
-    public String[] getHashTags() {
+    public ArrayList<String> getHashTags() {
         return hashTags;
     }
 
-    public void setTags(String[] hashTags) {
+    public void setHashTags(ArrayList<String> hashTags) {
         this.hashTags = hashTags;
     }
 
-    public String[] getLikes() {
+    public ArrayList<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(String[] likes) {
+    public void setLikes(ArrayList<String> likes) {
         this.likes = likes;
     }
+    public String toJson() {
+        return WorkWithJSON.getGson().toJson(this);
+    }
+
+    public static Post fromJson(String json) {
+        return WorkWithJSON.getGson().fromJson(json, Post.class);
+    }
+
+    @Override
+    public String toString(){
+        return new String("id: "+this.getId()+'\n' + "author: "+this.getAuthor()+'\n'
+        + "createdAt: "+this.getCreatedAt()+'\n' + "description: "+this.getDescription()+'\n'
+                + "HashTags: "+this.getHashTags()+'\n' + "likes: "+this.getLikes()+"\n\n");
+    }
+
+
 }
