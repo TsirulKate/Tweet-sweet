@@ -20,8 +20,7 @@ import com.google.gson.JsonObject;
 public class ServletPosts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try (OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream())){
-            String id=request.getParameter("id");
+            String id = request.getParameter("id");
             PostsFunctions pf=new PostsFunctions();
             if(pf.hasPost(id)){
                 Optional<Post> post=pf.getPost(id);
@@ -31,7 +30,6 @@ public class ServletPosts extends HttpServlet {
             else{
                 sendError(404, "Post not found", response);
             }
-        }
     }
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
@@ -68,7 +66,6 @@ public class ServletPosts extends HttpServlet {
         String id = request.getParameter("id");
         PostsFunctions pf=new PostsFunctions();
         EditInfo editInfo=EditInfo.fromJson(request.getParameter("info"));
-
         if(editInfo==null){
             sendError(400,"Invalidate post",response);
             return;

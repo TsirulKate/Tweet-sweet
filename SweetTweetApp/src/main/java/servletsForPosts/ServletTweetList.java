@@ -38,7 +38,7 @@ public class ServletTweetList extends HttpServlet {
         PostFiltering postFilter=new PostFiltering(dateAfter,dateBefore,author,hashTags);
         PostsFunctions pf=new PostsFunctions();
         List<Post> posts = pf.getPosts(skip, top, postFilter);
-        
+
         response.setContentType("application/json");
         response.getWriter().print(new Gson().toJson(posts));
 

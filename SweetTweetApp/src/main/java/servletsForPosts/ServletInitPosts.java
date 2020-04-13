@@ -31,7 +31,7 @@ public class ServletInitPosts extends HttpServlet {
             for (Post post : masPosts) {
                 pf.addPost(post);
             }
-            pf.sortByDateDescending();
+            //pf.sortByDateDescending();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class ServletInitPosts extends HttpServlet {
         try (OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream())){
             PostsFunctions pf=new PostsFunctions();
             writer.write("Massive of posts is initialized\n");
-            pf.sortByDateDescending();
+            //pf.sortByDateDescending();
             List<Post> posts = pf.getPosts(0,20,null);
             for (Post post : posts) {
                 writer.write(post.toString());
