@@ -28,11 +28,11 @@ public class ServletTweetList extends HttpServlet {
         temp=request.getParameter("dateAfter");
         LocalDateTime dateAfter=null,dateBefore=null;
         if(temp!=null){
-            dateAfter = LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_INSTANT.parse(temp)));
+            dateAfter = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(temp));
         }
         temp=request.getParameter("dateBefore");
         if(temp!=null){
-            dateBefore = LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_INSTANT.parse(temp)));
+            dateBefore = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(temp));
         }
 
         PostFiltering postFilter=new PostFiltering(dateAfter,dateBefore,author,hashTags);

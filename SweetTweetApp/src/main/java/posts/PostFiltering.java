@@ -1,6 +1,7 @@
 package posts;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 public class PostFiltering {
@@ -24,6 +25,7 @@ public class PostFiltering {
     }
 
     public boolean filtering(Post post){
+        System.out.println(">>>" + Arrays.toString( hashTags ));
         if(this.dateAfter!=null && !this.dateAfter.isBefore(post.getCreatedAt())){
             return false;
         }
@@ -33,7 +35,7 @@ public class PostFiltering {
         if(this.author!=null && !post.getAuthor().equals(this.author)){
             return false;
         }
-        if(this.hashTags != null && (post.getHashTags().isEmpty() || !post.getHashTags().contains(this.hashTags))){
+        if(this.hashTags != null && (post.getHashTags().isEmpty() || !post.getHashTags().containsAll(Arrays.asList(this.hashTags)))){
             return false;
         }
         return true;

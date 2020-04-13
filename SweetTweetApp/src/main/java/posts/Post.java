@@ -83,6 +83,7 @@ public final class Post {
     public void setLikes(ArrayList<String> likes) {
         this.likes = likes;
     }
+
     public String toJson() {
         return WorkWithJSON.getGson().toJson(this);
     }

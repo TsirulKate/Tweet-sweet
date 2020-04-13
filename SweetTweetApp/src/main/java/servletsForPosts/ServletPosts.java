@@ -67,6 +67,7 @@ public class ServletPosts extends HttpServlet {
         PostsFunctions pf=new PostsFunctions();
         EditInfo editInfo=EditInfo.fromJson(request.getParameter("info"));
         if(editInfo==null){
+            System.out.println(">>> EditInfo is null" + request.getParameter("info"));
             sendError(400,"Invalidate post",response);
             return;
         }
