@@ -1,7 +1,7 @@
 class TweetList{
     constructor(posts){
         this._posts = (posts || []);
-        this._availableId=(posts.length+1 || 0);
+        this._availableId=(this._posts.length+1 || 0);
     }
 
     static sortByDateDescending(posts) {
@@ -124,7 +124,7 @@ class TweetList{
             return 'Incorrect data';
         }
 
-        let postToEdit = this.getPost(parseInt(postID, 10) - 1);
+        let postToEdit = this.getPost(parseInt(postID, 10));
 
         if (post.hasOwnProperty('description')) {
             postToEdit.description = post.description;
@@ -221,3 +221,5 @@ class TweetList{
         return this._availableId;
     }
 }
+
+

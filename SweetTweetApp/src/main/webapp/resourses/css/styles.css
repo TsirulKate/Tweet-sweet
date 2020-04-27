@@ -171,6 +171,8 @@ p {
     font-weight: normal;
 }
 
+.hidden { display: none !important; }
+
 .icon{
     display: inline-block;
     margin-right: 2%;
@@ -245,7 +247,7 @@ footer{
 
 
 @media only screen and (max-width: 800px) {
-    .images{
+    .images[src]{
         width: 200px;
         height: 200px;
     }
