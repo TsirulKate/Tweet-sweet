@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 
 public class ServletSucess extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         resp.getWriter().print("{\"sucesss\" : true}");
     }

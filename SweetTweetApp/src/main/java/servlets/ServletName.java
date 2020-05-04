@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class ServletName extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream())){
-            Map<String,String[]> parameters = req.getParameterMap();
-            String name=parameters.getOrDefault("name", new String[]{"Kate"})[0];
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream())) {
+            Map<String, String[]> parameters = req.getParameterMap();
+            String name = parameters.getOrDefault("name", new String[]{"Kate"})[0];
             writer.write("Name is " + name);
         }
     }

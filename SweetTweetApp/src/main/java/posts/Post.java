@@ -1,11 +1,9 @@
 package posts;
 
-import com.google.gson.GsonBuilder;
-import servletsForPosts.WorkWithJSON;
+import servletsForPosts.JSONDecorator;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public final class Post {
     private String id;
@@ -13,10 +11,10 @@ public final class Post {
     private LocalDateTime createdAt;
     private String author;
     private String photoLink;
-    private ArrayList<String> hashTags;
-    private ArrayList<String> likes;
+    private List<String> hashTags;
+    private List<String> likes;
 
-    public Post(String id, String description, LocalDateTime createdAt, String author, String photoLink, ArrayList<String> hashTags, ArrayList<String> likes) {
+    public Post(String id, String description, LocalDateTime createdAt, String author, String photoLink, List<String> hashTags, List<String> likes) {
         this.id = id;
         this.description = description;
         this.createdAt = createdAt;
@@ -26,7 +24,7 @@ public final class Post {
         this.likes = likes;
     }
 
-    public Post(Post post) { //need or not?
+    public Post(Post post) {
         this.id = post.id;
         this.description = post.description;
         this.createdAt = post.createdAt;
@@ -68,35 +66,35 @@ public final class Post {
         this.photoLink = photoLink;
     }
 
-    public ArrayList<String> getHashTags() {
+    public List<String> getHashTags() {
         return hashTags;
     }
 
-    public void setHashTags(ArrayList<String> hashTags) {
+    public void setHashTags(List<String> hashTags) {
         this.hashTags = hashTags;
     }
 
-    public ArrayList<String> getLikes() {
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(ArrayList<String> likes) {
+    public void setLikes(List<String> likes) {
         this.likes = likes;
     }
 
     public String toJson() {
-        return WorkWithJSON.getGson().toJson(this);
+        return JSONDecorator.getGson().toJson(this);
     }
 
     public static Post fromJson(String json) {
-        return WorkWithJSON.getGson().fromJson(json, Post.class);
+        return JSONDecorator.getGson().fromJson(json, Post.class);
     }
 
     @Override
-    public String toString(){
-        return new String("id: "+this.getId()+'\n' + "author: "+this.getAuthor()+'\n'
-        + "createdAt: "+this.getCreatedAt()+'\n' + "description: "+this.getDescription()+'\n'
-                + "HashTags: "+this.getHashTags()+'\n' + "likes: "+this.getLikes()+"\n\n");
+    public String toString() {
+        return new String("id: " + this.getId() + '\n' + "author: " + this.getAuthor() + '\n'
+                + "createdAt: " + this.getCreatedAt() + '\n' + "description: " + this.getDescription() + '\n'
+                + "HashTags: " + this.getHashTags() + '\n' + "likes: " + this.getLikes() + "\n\n");
     }
 
 

@@ -1,58 +1,59 @@
 package posts;
 
-import servletsForPosts.WorkWithJSON;
+import servletsForPosts.JSONDecorator;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class EditInfo{
+public class EditInfo {
     private String description;
     private String photoLink;
-    private ArrayList<String> hashTags;
-    private ArrayList<String> likes;
+    private List<String> hashTags;
+    private List<String> likes;
 
-    EditInfo(){
-        description=photoLink=null;
-        hashTags=likes=null;
+    public EditInfo() {
     }
 
-    EditInfo(String description,String photoLink,ArrayList<String> hashTags,ArrayList<String> likes){
-        this.description=description;
-        this.hashTags=hashTags;
-        this.likes=likes;
-        this.photoLink=photoLink;
+    public EditInfo(String description, String photoLink, List<String> hashTags, List<String> likes) {
+        this.description = description;
+        this.hashTags = hashTags;
+        this.likes = likes;
+        this.photoLink = photoLink;
     }
 
-    String getDescription(){
+    String getDescription() {
         return description;
     }
-    String getPhotoLink(){
+
+    String getPhotoLink() {
         return photoLink;
     }
-    ArrayList<String> getHashTags(){
+
+    List<String> getHashTags() {
         return hashTags;
     }
 
-    ArrayList<String> getLikes(){
+    List<String> getLikes() {
         return likes;
     }
 
-    boolean hasDescription(){
+    boolean hasDescription() {
         return this.description != null;
     }
 
-    boolean hasPhotoLink(){
+    boolean hasPhotoLink() {
         return this.photoLink != null;
     }
 
-    boolean hasHashTags(){
+    boolean hasHashTags() {
         return this.hashTags != null;
     }
 
-    boolean hasLikes(){
+    boolean hasLikes() {
         return this.likes != null;
     }
 
     public static EditInfo fromJson(String json) {
-        return WorkWithJSON.getGson().fromJson(json, EditInfo.class);
+        return JSONDecorator.getGson().fromJson(json, EditInfo.class);
     }
 }

@@ -3,13 +3,12 @@ package servletsForPosts;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 
-public class WorkWithJSON {
+public class JSONDecorator {
     static Gson gson;
 
-    WorkWithJSON(){
+    JSONDecorator() {
         gson = new GsonBuilder().registerTypeAdapterFactory(new GsonJava8TypeAdapterFactory()).create();
     }
 
@@ -17,11 +16,11 @@ public class WorkWithJSON {
         return gson;
     }
 
-    public String toJson(Object element){
+    public static String toJson(Object element) {
         return gson.toJson(element);
     }
 
-    public String toJson(JsonElement element){
+    public static String toJson(JsonElement element) {
         return gson.toJson(element);
     }
 

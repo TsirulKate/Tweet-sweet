@@ -13,6 +13,6 @@ public class ServletTest1 extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nameURL = "/status";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nameURL);
-        dispatcher.forward(req,resp);
+        dispatcher.forward(req, resp);
     }
 }

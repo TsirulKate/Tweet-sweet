@@ -24,18 +24,18 @@ public class PostFiltering {
         this.hashTags = post.hashTags;
     }
 
-    public boolean filtering(Post post){
-        System.out.println(">>>" + Arrays.toString( hashTags ));
-        if(this.dateAfter!=null && !this.dateAfter.isBefore(post.getCreatedAt())){
+    public boolean test(Post post) {
+        System.out.println(">>>" + Arrays.toString(hashTags));
+        if (this.dateAfter != null && !this.dateAfter.isBefore(post.getCreatedAt())) {
             return false;
         }
         if (this.dateBefore != null && !this.dateBefore.isAfter(post.getCreatedAt())) {
             return false;
         }
-        if(this.author!=null && !post.getAuthor().equals(this.author)){
+        if (this.author != null && !post.getAuthor().equals(this.author)) {
             return false;
         }
-        if(this.hashTags != null && (post.getHashTags().isEmpty() || !post.getHashTags().containsAll(Arrays.asList(this.hashTags)))){
+        if (this.hashTags != null && (post.getHashTags().isEmpty() || !post.getHashTags().containsAll(Arrays.asList(this.hashTags)))) {
             return false;
         }
         return true;
