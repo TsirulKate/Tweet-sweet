@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Sweet Tweet</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/solid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="resourses/css/styles.css">
+    <meta name="viewport" content="width, initial-scale=1.0">
+</head>
+
+<body>
+<header>
+    <h1> Sweet Tweet </h1>
+</header>
+<main>
+    <div class="field-user">
+        <div>
+            <img class="avatar" src="resourses/images/91e83b00c27bf4d5bb849a6ac2b81fe5.jpg">
+            Alexander T
+        </div>
+        <div>
+            <button class = "button-add">Add post</button>
+            <button class = "button-log">Log out</button>
+        </div>
+    </div>
+
+    <div class="mobile-filtering">
+        <div class="filters-selected">Filters that are used</div>
+        <button class="mobile-filtering--button">
+            <i class="fas fa-filter"></i>
+        </button>
+    </div>
+    <div class="main-field">
+            <div class="filtering"> <h2> Filtering posts</h2>
+                <p>
+                    <input class="filters" type="checkbox" id="author"><label for="author">Authors</label>
+                    <input class="filters" type="text" placeholder="Input author">
+                    <button class="add-filter">+Add more</button>
+                    <input class="filters" type="checkbox" id="date"><label for="date">Date</label>
+                    <input class="filters" type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY">
+                    <input class="filters" type="checkbox" id="hashtag"><label for="hashtag">Hashtag</label>
+                    <input class="filters" type="text" placeholder="Input hashtag">
+                    <button class="add-filter">+Add more</button>
+                </p>
+            </div>
+
+        <template id = "template-post">
+            <div class ="post">
+                <div class="post-header">
+                    <div class="username"><div class="bad-avatar"> </div>
+                        <span data-target="author"> </span>  </div>
+                    <div  class="buttons">
+                        <button class="user-button">Edit Post</button>
+                        <button class="user-button"> Delete Post </button>
+                    </div>
+                </div>
+                <p data-target="description"></p>
+                <h5 data-target="hashTags"></h5>
+                <img class = "images" data-target="photoLink" data-target-src = "src" />
+                <div class="post-footer">
+                    <div class="like" >
+                        <i class="fas fa-heart"></i>
+                        <span data-target="likesCount"></span>
+                    </div>
+                    <p class="post-date" data-target="postDate"></p>
+                </div>
+            </div>
+        </template>
+        <div id="news-line"></div>
+    </div>
+    <div>
+        <p><button class = "button-load">Load more</button></p>
+    </div>
+</main>
+<footer>
+    <h4>
+        Sweet Tweet   katya.tsirul.01@mail.ru   Last changes: 24.02.2020   Creator: Ekaterina Tsirul   2 course 5 group
+    </h4>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="resourses/js/View/View.js"></script>
+<script src="resourses/js/App.js"></script>
+<script src="resourses/js/posts.js"></script>
+<script > app = new App(); app.renderPosts(); </script>
+</body>
+</html>
