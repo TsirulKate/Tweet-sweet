@@ -17,7 +17,7 @@ const POSTS = [
         "createdAt": "2020-02-14T21:56:21",
         "author": "Sean C",
         "hashTags": ["#moving", "#world", "#travelling"],
-        "likes": ["Alexander T","Lola", "Paula", "Egor B", "Vlada", "Masha U"]
+        "likes": ["Alexander T", "Lola", "Paula", "Egor B", "Vlada", "Masha U"]
     },
     {
         "id": "3",
@@ -170,29 +170,76 @@ const POSTS = [
 class App {
 
     constructor() {
-        this.tweetList = new TweetList(POSTS.map((p) => ({ ...p, createdAt: new Date(p.createdAt ) })));
+        this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
+        this.currentUser = null;
+        this.view = new View();
+        this.currentPage = "posts";
+        this.operation=null;
+    }
+
+    login(user) {
+        this.currentUser = user;
+        this.setPage("posts");
+    }
+
+    setPage(page){
+        this.currentPage=page;
+        this.renderPage();
+    }
+
+    setOperation(operation){
+     this.operation=operation;
+    }
+
+    renderPage() {
+        switch (this.currentPage) {
+            case "posts":{
+                this.renderPosts();
+                break;
+            }
+            case "authorization":{
+                this.renderAuthPage();
+                break;
+            }
+            case "addEditPage":{
+                this.renderAddEditPage();
+                break;
+            }
+        }
     }
 
     renderPosts() {
-        let view = new View();
-        view.addPostsToNewsLine(this.tweetList.getPosts(), "Alexander T");
+        this.view.renderPostsPage(this.tweetList.getPosts(), this.currentUser, this.setOperation.bind(this), this.setPage.bind(this),this.login.bind(this));
     }
 
-    addPost(post){
-        if(this.tweetList.addPost(post)){
-            this.renderPosts();
+    renderAuthPage(){
+        this.view.renderAuthorizationPage(this.setPage.bind(this),this.login.bind(this));
+    }
+
+    renderAddEditPage(){
+        if(this.operation==="add"){
+            this.view.renderAddEditPage(this.currentUser,this.operation,{},this.tweetList._availableId,this.addPost.bind(this));
+        }
+        else{
+            this.view.renderAddEditPage(this.currentUser,this.operation,this.tweetList.getPost(Number(this.operation)),null,this.editPost.bind(this));
         }
     }
 
-    deletePost(postID){
-        if(this.tweetList.removePost(postID)){
-            this.renderPosts();
+    addPost(post) {
+        if (this.tweetList.addPost(post)) {
+            this.setPage("posts");
         }
     }
 
-    editPost(postID,post){
-        if(this.tweetList.editPost(postID,post)){
-            this.renderPosts();
+    deletePost(postID) {
+        if (this.tweetList.removePost(postID)) {
+            this.setPage("posts");
+        }
+    }
+
+    editPost(postID, post) {
+        if (this.tweetList.editPost(postID, post)) {
+            this.setPage("posts");
         }
     }
 

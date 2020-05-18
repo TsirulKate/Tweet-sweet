@@ -92,8 +92,6 @@ class TweetList{
             return 'Incorrect data';
         } else if (typeof post.description != "string") {
             return false;
-        } else if (toString.call(post.createdAt) !== "[object Date]") {
-            return false;
         } else if (typeof post.author != "string") {
             return false;
         } else if (toString.call(post.hashTags) !== "[object Array]") {

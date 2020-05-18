@@ -10,7 +10,7 @@ header {
     margin: 0;
     width: 100%;
     opacity: 0.8;
-    background: radial-gradient(circle at center, #0844a4 200px, white 201px, #0844a4 100%);;
+    background: radial-gradient(circle at center, #0844a4 200px, white 201px, #0844a4 100%);
 }
 
 h1 {
@@ -33,7 +33,7 @@ h1 {
     border: 3px ridge #2e76d6;
 }
 
-.field-user div:first-child {
+.field-user > div:first-child {
     flex: 1;
     color: #033076;
     font-family: Helvetica, sans-serif;
@@ -70,6 +70,20 @@ button {
     min-height: 30px;
     margin-right: 10px;
     border: 2px ridge #033076;
+}
+
+.button-authorization{
+    min-width: 120px;
+    min-height: 30px;
+    color: #ffffff;
+    font-family: Times, Times New Roman, serif;
+    font-size: 28px;
+    font-weight: normal;
+    text-align: center;
+    border: 2px ridge #033076;
+    margin:1% auto 1% auto;
+    background: rgb(202,221,254);
+    background: linear-gradient(183deg, rgba(202,221,254,1) 19%, rgba(11,84,203,1) 72%, rgba(7,56,134,1) 100%);
 }
 
 .mobile-filtering {
@@ -127,7 +141,7 @@ p {
     font-weight: normal;
 }
 
-#news-line {
+.news-line {
     border-radius: 20px;
     margin: 3% 5% 0 5%;
     width: fit-content;
@@ -235,6 +249,133 @@ h4{
     font-weight: normal;
     font-size: 20px;
     font-family: Bookman, URW Bookman L, serif;
+}
+
+.field-for-authorization{
+    border-radius: 20px;
+    width: 55%;
+    background: #caddfe;
+    margin: 5% auto 20% auto;
+    padding: 3% 0 3% 0;
+}
+
+.heading{
+    margin: 2% auto 2% auto;
+    text-align: center;
+}
+
+
+.login{
+    margin: 3% auto 0 auto;
+    justify-content: center;
+}
+
+.password{
+    margin: 0 auto 5% auto;
+    justify-content: center;
+}
+
+.authorization-log{
+    margin-left: 5%;
+    height: 20px;
+    border: 2px ridge #033076;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.authorization-password{
+    margin-left: 3%;
+    height: 20px;
+    border: 2px ridge #033076;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.button-login{
+    height: 42px;
+    width: 156px;
+    color: #033076;
+    font-weight: normal;
+    font-family: Bookman, URW Bookman L, serif;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 2px ridge #033076;
+    display: block;
+    margin: auto;
+    background: #fff2fc;
+}
+
+.field-for-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background: #caddfe;
+    margin: 5% 5% 20% 5%;
+    padding: 3% 0 3% 0;
+}
+
+.oneLine {
+    display: flex;
+    align-items: center;
+    color: #033076;
+    font-family: Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+.creator{
+    margin-bottom: 5%;
+    justify-content: center;
+}
+
+.field-for-description{
+    resize: none;
+    margin: 0 0 3% 5%;
+    height: 150px;
+    width: 90%;
+    border: 2px ridge #033076;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.field-for-hashtags{
+    margin-left: 5%;
+    height: 20px;
+    width: 300px;
+    border: 2px ridge #033076;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.add-edit-post-footer{
+    display: flex;
+    justify-content: space-between;
+    flex: auto;
+    margin-top: 2%;
+}
+
+.button-for-picture{
+    width: 65px;
+    height: 65px;
+    background: #fff2fc;
+    border-radius: 10px;
+    margin-left: 5%;
+    border: 2px ridge #033076;
+}
+
+.currentDate{
+    margin-right: 3%;
+}
+
+.button-upload-post{
+    width: 156px;
+    height: 42px;
+    margin:3% auto 0 auto;
+    background: #fff2fc;
+    border-radius: 10px;
+    border: 2px ridge #033076;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 footer{
