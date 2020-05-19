@@ -1,6 +1,6 @@
 class View {
 
-    renderPostsPage(posts, currentUser, operation, setPage, login) {
+    renderPostsPage(posts, currentUser, funcForPostDeleting, operation, setPage, login, workWithLike) {
         let postsPageWrapper = document.getElementById("currentPage");
         postsPageWrapper.innerHTML = "";
         let fragment = this.workWithTemplate("template-posts-page", {});
@@ -30,7 +30,7 @@ class View {
         let postsWrapper = fragment.querySelector(".news-line");
         postsWrapper.innerHTML = "";
         posts.forEach((post) => {
-            const f = this.renderPost(post, currentUser, operation, setPage);
+            const f = this.renderPost(post, currentUser, funcForPostDeleting, operation, setPage, workWithLike);
             postsWrapper.appendChild(f);
         });
         postsPageWrapper.appendChild(fragment);
@@ -68,11 +68,11 @@ class View {
         return fragment;
     }
 
-    renderPost(post, currentAuthor, operation, setPage) {
+    renderPost(post, currentAuthor, funcForPostDeleting, operation, setPage, workWithLike) {
         post = {
             ...post,
             likesCount: post.likes.length,
-            postDate: moment(post.createdAt).format("On MMMM D, YYYY H:m"),
+            postDate: moment(post.createdAt).format("On MMMM D, YYYY H:mm"),
             hashTags: post.hashTags.join("  ")
         };
 
@@ -99,12 +99,20 @@ class View {
 
         let editPostButton = fragment.querySelector(".button-edit");
         let deletePostButton = fragment.querySelector(".button-delete");
+        let likePostButton = fragment.querySelector(".like,.like-pressed");
+
         if (editPostButton) {
             editPostButton.addEventListener("click", () => {
-                operation = String(post.id);
+                operation(String(post.id));
                 setPage("addEditPage");
             });
         }
+
+        if (deletePostButton) {
+            deletePostButton.addEventListener("click", () => funcForPostDeleting(post.id));
+        }
+
+        likePostButton.addEventListener("click", () => workWithLike(post.id));
 
         return fragment;
     }
@@ -112,17 +120,25 @@ class View {
     renderAddEditPage(currentUser, operation, post, availableID, funcForWork, setPage) {
         let addEditPageWrapper = document.getElementById("currentPage");
         addEditPageWrapper.innerHTML = "";
-        let text;
+        let text, fragment;
         if (operation == "add") {
             text = "Create new post";
+            fragment = this.workWithTemplate("template-add-edit-page", {
+                user: currentUser,
+                currentDate: moment().format("On MMMM D, YYYY H:mm"),
+                buttonUploadPost: text
+            });
         } else {
             text = "Edit post";
+            fragment = this.workWithTemplate("template-add-edit-page", {
+                user: currentUser,
+                currentDate: moment(post.createdAt).format("On MMMM D, YYYY H:mm"),
+                description: post.description,
+                hashtags: post.hashTags.join(" "),
+                buttonUploadPost: text
+            });
         }
-        let fragment = this.workWithTemplate("template-add-edit-page", {
-            user: currentUser,
-            currentDate: moment().format("On MMMM D, YYYY H:m"),
-            buttonUploadPost: text
-        });
+
         let addEditForm = fragment.querySelector("form");
         const badAvatar = fragment.querySelector(".bad-avatar");
         const img = document.createElement('img');
@@ -138,17 +154,47 @@ class View {
                         createdAt: new Date(),
                         author: currentUser,
                         hashTags: e.target.hashtags.value.split(" "),
-                        likes:[]
+                        likes: []
                     });
                 } else {
                     funcForWork(Number(operation), {
                         description: e.target.description.value,
                         hashTags: e.target.hashtags.value.split(" ")
-                    })
+                    });
                 }
             }
         });
         addEditPageWrapper.appendChild(fragment);
     }
 
+    renderFilteringPosts(setFilters) {
+        let filteringPageWrapper = document.getElementById("currentPage");
+        filteringPageWrapper.innerHTML = "";
+        let fragment = this.workWithTemplate("template-filteringPage", {});
+        let filterButton = fragment.querySelector("form");
+        let filters = {
+            author: null,
+            date_before: null,
+            date_after: null,
+            date: null,
+            hashTags: null
+        };
+        filterButton.addEventListener("submit", (e) => {
+            if (e.target.checkAuthor.checked) {
+                filters.author = e.target.inputAuthor.value;
+            }
+            if (e.target.checkDate.checked) {
+                filters.date = e.target.inputDate.value;
+            }
+            if (e.target.checkDatePeriod.checked) {
+                filters.date_after = e.target.inputDateAfter.value;
+                filters.date_before = e.target.inputDateBefore.value;
+            }
+            if (e.target.checkHashTags.checked) {
+                filters.hashTags = e.target.inputHashTags.value.split(" ");
+            }
+            setFilters(filters);
+        });
+        filteringPageWrapper.appendChild(fragment);
+    }
 }

@@ -21,53 +21,69 @@ class TweetList{
         return posts.filter(post => hashTags.every(tag => post.hashTags.includes(tag)));
     }
 
-    _filterByDate(posts,dates) {
+    _filterByDates(posts,dates) {
         return posts.filter(function(post) {
             return post.createdAt >= new Date(dates[0]) && post.createdAt <= new Date(dates[1]);
         });
     }
+
+    _filterByDate(posts,date) {
+        return posts.filter(function(post) {
+            return post.createdAt === date;
+        });
+    }
+
     getPosts(skip = 0, top = 10, filterConfig) {
         if (!Number.isInteger(parseInt(skip, 10)) || skip < 0 || !Number.isInteger(parseInt(top, 10)) || top <= 0) {
-            return 'Incorrect data';
+            console.warn("INCORRECT DATA");
+            return [];
         }
 
         let searching=this._posts.slice(0,this._posts.length);
         TweetList.sortByDateDescending(searching);
         let searchingWasTryToFind=false;
 
-        if (filterConfig === undefined) {
+        if (!filterConfig) {
             searching=searching.slice(skip,skip+top);
             return searching;
         } else {
-            if (filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')) {
+            if (filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')
+                && filterConfig.date_after && filterConfig.date_before) {
                 let dates=[filterConfig.date_after,filterConfig.date_before];
-                searching = this._filterByDate(searching,dates);
+                searching = this._filterByDates(searching,dates);
                 searchingWasTryToFind=true;
             }
 
-            if (filterConfig.hasOwnProperty('author')) {
+            if(filterConfig.hasOwnProperty('date') && filterConfig.date){
+                searching=this._filterByDate(searching,filterConfig.date);
+                searchingWasTryToFind=true;
+            }
+
+            if (filterConfig.hasOwnProperty('author') && filterConfig.author) {
                 searching = this._filterByAuthors(searching,filterConfig.author);
                 searchingWasTryToFind=true;
             }
 
-            if (filterConfig.hasOwnProperty('hashTags')) {
+            if (filterConfig.hasOwnProperty('hashTags') && filterConfig.hashTags) {
                 searching = this._filterByHashTags(searching,filterConfig.hashTags);
                 searchingWasTryToFind=true;
             }
 
             else if(!filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before')
                 && !filterConfig.hasOwnProperty('author') && !filterConfig.hasOwnProperty('hashTags')) {
-                return 'Incorrect data';
+                console.warn("INCORRECT DATA");
+                return [];
             }
 
             if(filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before') ||
                 !filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')){
-                return 'Incorrect data';
+                console.warn("INCORRECT DATA");
+                return [];
             }
         }
 
         if(searching.length === 0 || !searchingWasTryToFind){
-            return 'NO SUCH ELEMENTS';
+            return [];
         }
 
         searching=searching.slice(skip,skip+top);
@@ -187,7 +203,7 @@ class TweetList{
         return true;
     }
 
-    removeLike(postID,user_name){
+    removeLike(postID,user){
         if (!Number.isInteger(parseInt(postID, 10))) {
             return false;
         }
@@ -198,16 +214,23 @@ class TweetList{
             return false;
         }
 
-        if (TweetList.validatePost(post) && !post.likes.includes(user_name)) {
+        if (TweetList.validatePost(post) && !post.likes.includes(user)) {
             return false;
         }
 
-        const indexOfLike = post.likes.indexOf(user_name);
-        const likes = post.likes.splice(indexOfLike,1);
-        const indexOfPost=this._posts.indexOf(post);
+        const indexOfLike = post.likes.indexOf(user);
+        post.likes.splice(indexOfLike,1);
 
-        this._posts[indexOfPost].likes=likes;
         return true;
+    }
+
+    workWithLike(postId,user){
+        if(this.getPost(postId).likes!=null && this.getPost(postId).likes.includes(user)){
+            this.removeLike(postId,user);
+        }
+        else{
+            this.addLike(postId,user);
+        }
     }
 
     clear(){

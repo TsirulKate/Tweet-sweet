@@ -173,8 +173,20 @@ class App {
         this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
         this.currentUser = null;
         this.view = new View();
+        this.filters = null;
+        this.skip = 0;
         this.currentPage = "posts";
-        this.operation=null;
+        this.operation = null;
+        this.confirm = document.querySelector(".button-delete-post-on-field");
+        this.cancel = document.querySelector(".button-cancel");
+        this.message = document.querySelector(".field-for-deleting");
+        this.filtering = null;
+        this.postForDeleting = null;
+        this.confirm.addEventListener("click", () => {
+            this.deletePost(this.postForDeleting);
+            this.message.classList.remove("emergence");
+        });
+        this.cancel.addEventListener("click", () => this.message.classList.remove("emergence"));
     }
 
     login(user) {
@@ -182,47 +194,66 @@ class App {
         this.setPage("posts");
     }
 
-    setPage(page){
-        this.currentPage=page;
+    setPage(page) {
+        this.currentPage = page;
         this.renderPage();
     }
 
-    setOperation(operation){
-     this.operation=operation;
+    setOperation(operation) {
+        this.operation = operation;
+    }
+
+    setFilters(filters) {
+        this.filters = filters;
+        this.setPage("posts");
+    }
+
+    setSkip(skip) {
+        this.skip = skip;
     }
 
     renderPage() {
         switch (this.currentPage) {
-            case "posts":{
+            case "posts": {
                 this.renderPosts();
                 break;
             }
-            case "authorization":{
+            case "authorization": {
                 this.renderAuthPage();
                 break;
             }
-            case "addEditPage":{
+            case "addEditPage": {
                 this.renderAddEditPage();
+                break;
+            }
+            case "filtering": {
+                this.renderFilteringPosts();
                 break;
             }
         }
     }
 
     renderPosts() {
-        this.view.renderPostsPage(this.tweetList.getPosts(), this.currentUser, this.setOperation.bind(this), this.setPage.bind(this),this.login.bind(this));
+        this.view.renderPostsPage(this.tweetList.getPosts(this.skip, 10, this.filters), this.currentUser, this.setPostForDeleting.bind(this),
+            this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this));
+        this.filtering = document.querySelector(".filtering-button");
+        this.filtering.addEventListener("click", () => this.setPage("filtering"));
     }
 
-    renderAuthPage(){
-        this.view.renderAuthorizationPage(this.setPage.bind(this),this.login.bind(this));
+    renderAuthPage() {
+        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this));
     }
 
-    renderAddEditPage(){
-        if(this.operation==="add"){
-            this.view.renderAddEditPage(this.currentUser,this.operation,{},this.tweetList._availableId,this.addPost.bind(this));
+    renderAddEditPage() {
+        if (this.operation === "add") {
+            this.view.renderAddEditPage(this.currentUser, this.operation, {}, this.tweetList._availableId, this.addPost.bind(this));
+        } else {
+            this.view.renderAddEditPage(this.currentUser, this.operation, this.tweetList.getPost(this.operation), null, this.editPost.bind(this));
         }
-        else{
-            this.view.renderAddEditPage(this.currentUser,this.operation,this.tweetList.getPost(Number(this.operation)),null,this.editPost.bind(this));
-        }
+    }
+
+    renderFilteringPosts() {
+        this.view.renderFilteringPosts(this.setFilters.bind(this));
     }
 
     addPost(post) {
@@ -243,4 +274,19 @@ class App {
         }
     }
 
+    filteringPosts() {
+        if (this.tweetList.getPosts(this.skip, 10, this.filters)) {
+            this.setPage("posts");
+        }
+    }
+
+    workWithLike(postId) {
+        this.tweetList.workWithLike(postId, this.currentUser);
+        this.setPage("posts");
+    }
+
+    setPostForDeleting(postId) {
+        this.postForDeleting = postId;
+        this.message.classList.add("emergence");
+    }
 }
