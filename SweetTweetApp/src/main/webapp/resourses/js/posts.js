@@ -35,8 +35,8 @@ class TweetList{
 
     getPosts(skip = 0, top = 10, filterConfig) {
         if (!Number.isInteger(parseInt(skip, 10)) || skip < 0 || !Number.isInteger(parseInt(top, 10)) || top <= 0) {
-            console.warn("INCORRECT DATA");
-            return [];
+            //console.warn("INCORRECT DATA");
+            return "Incorrect data";
         }
 
         let searching=this._posts.slice(0,this._posts.length);
@@ -71,14 +71,14 @@ class TweetList{
 
             else if(!filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before')
                 && !filterConfig.hasOwnProperty('author') && !filterConfig.hasOwnProperty('hashTags')) {
-                console.warn("INCORRECT DATA");
-                return [];
+                //console.warn("INCORRECT DATA");
+                return "Incorrect data";
             }
 
             if(filterConfig.hasOwnProperty('date_after') && !filterConfig.hasOwnProperty('date_before') ||
                 !filterConfig.hasOwnProperty('date_after') && filterConfig.hasOwnProperty('date_before')){
-                console.warn("INCORRECT DATA");
-                return [];
+                //console.warn("INCORRECT DATA");
+                return "Incorrect data";
             }
         }
 

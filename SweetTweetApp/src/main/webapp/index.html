@@ -75,6 +75,7 @@
                 <button class="button-load">Load more</button>
             </p>
         </div>
+
     </template>
 
     <template id="template-authorization-page">
@@ -122,6 +123,15 @@
         <h3 class="heading"> Are you sure? </h3>
         <button class="button-delete-post-on-field"> Delete</button>
         <button class="button-cancel"> Cancel</button>
+    </div>
+
+    <div class="field-for-error">
+        <h3 class="error"> An error was occurred </h3>
+        <template id="template-textarea-for-error">
+            <div class="textOfError" data-target="textError"></div>
+        </template>
+        <div id="textarea-for-error"></div>
+        <button class="button-return"> Close </button>
     </div>
 
     <template id="template-filteringPage">

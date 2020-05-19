@@ -173,13 +173,17 @@ class App {
         this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
         this.currentUser = null;
         this.view = new View();
+        this.viewPosts = null;
         this.filters = null;
-        this.skip = 0;
+        this.top = 10;
         this.currentPage = "posts";
         this.operation = null;
         this.confirm = document.querySelector(".button-delete-post-on-field");
         this.cancel = document.querySelector(".button-cancel");
         this.message = document.querySelector(".field-for-deleting");
+        this.error = document.querySelector(".field-for-error");
+        this.loadMore = null;
+        this.closeButton = null;
         this.filtering = null;
         this.postForDeleting = null;
         this.confirm.addEventListener("click", () => {
@@ -208,8 +212,38 @@ class App {
         this.setPage("posts");
     }
 
-    setSkip(skip) {
-        this.skip = skip;
+    setTop() {
+        this.top += 10;
+        this.setPage("posts");
+    }
+
+    setButtonLoad(button) {
+        this.loadMore = button;
+        this.loadMore.addEventListener("click", () => {
+            this.setTop();
+            if (this.isFull()) {
+                this.loadMore.classList.add("shadow");
+            }
+        });
+    }
+
+    setPostForDeleting(postId) {
+        this.postForDeleting = postId;
+        this.message.classList.add("emergence");
+    }
+
+    setErrorField() {
+        this.error.classList.add("emergence");
+        this.closeButton = document.querySelector(".button-return");
+        this.closeButton.addEventListener("click", () => {
+                this.error.classList.remove("emergence");
+                this.setPage("posts")
+            }
+        );
+    }
+
+    isFull() {
+        return this.top >= (this.tweetList._availableId - 1);
     }
 
     renderPage() {
@@ -234,14 +268,22 @@ class App {
     }
 
     renderPosts() {
-        this.view.renderPostsPage(this.tweetList.getPosts(this.skip, 10, this.filters), this.currentUser, this.setPostForDeleting.bind(this),
-            this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this));
+        this.viewPosts = this.tweetList.getPosts(0, this.top, this.filters);
+        if (this.viewPosts === "Incorrect data") {
+            this.renderError(this.viewPosts);
+        }
+        this.view.renderPostsPage(this.viewPosts, this.currentUser, this.setPostForDeleting.bind(this),
+            this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this),
+            this.setButtonLoad.bind(this));
+        if(this.viewPosts.length===0){
+            this.loadMore.classList.add("shadow");
+        }
         this.filtering = document.querySelector(".filtering-button");
         this.filtering.addEventListener("click", () => this.setPage("filtering"));
     }
 
     renderAuthPage() {
-        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this));
+        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this),this.renderError.bind(this));
     }
 
     renderAddEditPage() {
@@ -254,6 +296,10 @@ class App {
 
     renderFilteringPosts() {
         this.view.renderFilteringPosts(this.setFilters.bind(this));
+    }
+
+    renderError(textError) {
+        this.view.renderError(textError, this.setErrorField.bind(this));
     }
 
     addPost(post) {
@@ -274,19 +320,15 @@ class App {
         }
     }
 
-    filteringPosts() {
-        if (this.tweetList.getPosts(this.skip, 10, this.filters)) {
+    /*filteringPosts() {
+        if (this.tweetList.getPosts(0, this.top, this.filters)) {
             this.setPage("posts");
         }
-    }
+    }*/
 
     workWithLike(postId) {
         this.tweetList.workWithLike(postId, this.currentUser);
         this.setPage("posts");
     }
 
-    setPostForDeleting(postId) {
-        this.postForDeleting = postId;
-        this.message.classList.add("emergence");
-    }
 }

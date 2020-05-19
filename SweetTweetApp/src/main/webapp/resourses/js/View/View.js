@@ -1,6 +1,24 @@
 class View {
 
-    renderPostsPage(posts, currentUser, funcForPostDeleting, operation, setPage, login, workWithLike) {
+    workWithTemplate(templateElement, currentObject) {
+        let template = document.getElementById(templateElement);
+        let fragment = template.content.cloneNode(true);
+        let blocks = fragment.querySelectorAll("[data-target]");
+        blocks.forEach((b) => {
+            const key = b.getAttribute("data-target");
+            if (typeof currentObject[key] == 'undefined') {
+                return;
+            }
+            if (b.hasAttribute("data-target-src")) {
+                b.setAttribute(b.getAttribute("data-target-src"), currentObject[key]);
+            } else {
+                b.innerHTML = currentObject[key];
+            }
+        });
+        return fragment;
+    }
+
+    renderPostsPage(posts, currentUser, funcForPostDeleting, operation, setPage, login, workWithLike, setButtonLoad) {
         let postsPageWrapper = document.getElementById("currentPage");
         postsPageWrapper.innerHTML = "";
         let fragment = this.workWithTemplate("template-posts-page", {});
@@ -33,11 +51,12 @@ class View {
             const f = this.renderPost(post, currentUser, funcForPostDeleting, operation, setPage, workWithLike);
             postsWrapper.appendChild(f);
         });
+        setButtonLoad(fragment.querySelector(".button-load"));
         postsPageWrapper.appendChild(fragment);
 
     }
 
-    renderAuthorizationPage(setPage, login) {
+    renderAuthorizationPage(setPage, login,renderError) {
         let authPageWrapper = document.getElementById("currentPage");
         authPageWrapper.innerHTML = "";
         let fragment = this.workWithTemplate("template-authorization-page", {});
@@ -46,26 +65,11 @@ class View {
             if (e.target.login.value) {
                 login(e.target.login.value);
             }
+            else{
+                renderError("Incorrect data at authorization");
+            }
         });
         authPageWrapper.appendChild(fragment);
-    }
-
-    workWithTemplate(templateElement, currentObject) {
-        let template = document.getElementById(templateElement);
-        let fragment = template.content.cloneNode(true);
-        let blocks = fragment.querySelectorAll("[data-target]");
-        blocks.forEach((b) => {
-            const key = b.getAttribute("data-target");
-            if (typeof currentObject[key] == 'undefined') {
-                return;
-            }
-            if (b.hasAttribute("data-target-src")) {
-                b.setAttribute(b.getAttribute("data-target-src"), currentObject[key]);
-            } else {
-                b.innerHTML = currentObject[key];
-            }
-        });
-        return fragment;
     }
 
     renderPost(post, currentAuthor, funcForPostDeleting, operation, setPage, workWithLike) {
@@ -196,5 +200,14 @@ class View {
             setFilters(filters);
         });
         filteringPageWrapper.appendChild(fragment);
+    }
+
+    renderError(textOfError,setErrorField){
+        setErrorField();
+        let errorWrapper=document.getElementById("textarea-for-error");
+        let fragment=this.workWithTemplate("template-textarea-for-error",{
+            textError:textOfError
+        });
+        errorWrapper.appendChild(fragment);
     }
 }

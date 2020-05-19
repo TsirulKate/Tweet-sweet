@@ -149,8 +149,8 @@ h2 {
     background: #fff2fc;
 }
 
-.button-filter{
-    margin:5%;
+.button-filter {
+    margin: 5%;
     height: 30px;
     width: 120px;
     border: 2px ridge #033076;
@@ -166,7 +166,7 @@ p {
 .news-line {
     border-radius: 20px;
     margin: 3% 5% 0 5%;
-    width: fit-content;
+    width: 100%;
     padding: 20px;
     background: #caddfe;
 }
@@ -419,7 +419,7 @@ h4 {
 }
 
 .emergence {
-    display: block;
+    display: block !important;
 }
 
 
@@ -438,6 +438,51 @@ h4 {
     width: 106px;
     height: 42px;
     margin: 25% 0 0 0;
+    background: #fff2fc;
+    border-radius: 10px;
+    border: 2px ridge #033076;
+    font-family: Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.shadow {
+    display: none !important;
+}
+
+
+.field-for-error {
+    display: none;
+    position: fixed;
+    height: 144px;
+    width: 225px;
+    padding: 30px 20px 10px;
+    transform: translate(-50%, -50%);
+    background: #caddfe;
+    border-radius: 10px;
+    border: 2px ridge #033076;
+    font-family: Helvetica, sans-serif;
+    font-size: 15px;
+    top: 50%;
+    left: 50%;
+    opacity: 85%;
+}
+
+.textOfError{
+    margin: 10px 0 0 10px;
+    font-family: Helvetica, sans-serif;
+    font-size: 10px;
+}
+
+.error {
+    margin: 2% auto 2% auto;
+    text-align: center;
+    color: #e61615;
+}
+
+.button-return {
+    width: 106px;
+    height: 42px;
+    margin: 15% 0 0 25%;
     background: #fff2fc;
     border-radius: 10px;
     border: 2px ridge #033076;
