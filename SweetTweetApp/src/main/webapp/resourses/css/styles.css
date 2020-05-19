@@ -138,7 +138,11 @@ h2 {
 }
 
 .filters {
-    margin: 10px 0 10px 0;
+    margin: 10px 2px 10px 10px;
+}
+
+.dateBox {
+    width: 100px;
 }
 
 .add-filter {
@@ -326,6 +330,7 @@ h4 {
     border: 2px ridge #033076;
     display: block;
     margin: auto;
+    background: #fff2fc;
 }
 
 .field-for-form {
@@ -344,6 +349,7 @@ h4 {
     color: #033076;
     font-family: Helvetica, sans-serif;
     font-weight: normal;
+    width: fit-content;
 }
 
 .creator {
@@ -464,13 +470,15 @@ h4 {
     font-size: 15px;
     top: 50%;
     left: 50%;
-    opacity: 85%;
+    opacity: 92%;
 }
 
-.textOfError{
-    margin: 10px 0 0 10px;
+.textOfError {
+    margin: 10% auto 2% auto;
+    text-align: center;
     font-family: Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 14px;
+    color: #033076;
 }
 
 .error {

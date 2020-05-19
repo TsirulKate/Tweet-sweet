@@ -170,8 +170,13 @@ const POSTS = [
 class App {
 
     constructor() {
-        this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
-        this.currentUser = null;
+        //this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
+        this.tweetList = new TweetList();
+        this.tweetList.restore();
+        if (this.tweetList._posts.length === 0) {
+            this.tweetList.addAll(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
+        }
+        this.currentUser = localStorage.getItem("user");
         this.view = new View();
         this.viewPosts = null;
         this.filters = null;
@@ -195,6 +200,11 @@ class App {
 
     login(user) {
         this.currentUser = user;
+        if (user) {
+            localStorage.setItem("user", user);
+        } else {
+            localStorage.removeItem("user");
+        }
         this.setPage("posts");
     }
 
@@ -275,7 +285,7 @@ class App {
         this.view.renderPostsPage(this.viewPosts, this.currentUser, this.setPostForDeleting.bind(this),
             this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this),
             this.setButtonLoad.bind(this));
-        if(this.viewPosts.length===0){
+        if (this.viewPosts.length === 0 || this.viewPosts.length === this.tweetList._posts.length) {
             this.loadMore.classList.add("shadow");
         }
         this.filtering = document.querySelector(".filtering-button");
@@ -283,13 +293,16 @@ class App {
     }
 
     renderAuthPage() {
-        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this),this.renderError.bind(this));
+        this.top = 10;
+        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this), this.renderError.bind(this));
     }
 
     renderAddEditPage() {
         if (this.operation === "add") {
+            this.top = 10;
             this.view.renderAddEditPage(this.currentUser, this.operation, {}, this.tweetList._availableId, this.addPost.bind(this));
         } else {
+            this.top = 10;
             this.view.renderAddEditPage(this.currentUser, this.operation, this.tweetList.getPost(this.operation), null, this.editPost.bind(this));
         }
     }
@@ -304,17 +317,21 @@ class App {
 
     addPost(post) {
         if (this.tweetList.addPost(post)) {
+            this.top = 10;
             this.setPage("posts");
         }
+
     }
 
     deletePost(postID) {
+        this.top = 10;
         if (this.tweetList.removePost(postID)) {
             this.setPage("posts");
         }
     }
 
     editPost(postID, post) {
+        this.top = 10;
         if (this.tweetList.editPost(postID, post)) {
             this.setPage("posts");
         }
@@ -330,5 +347,6 @@ class App {
         this.tweetList.workWithLike(postId, this.currentUser);
         this.setPage("posts");
     }
+
 
 }

@@ -88,7 +88,8 @@
                 </div>
                 <div class="oneLine password">
                     <p> Password </p>
-                    <input class="authorization-password" name="password" type="text" placeholder="Input your password">
+                    <input class="authorization-password" name="password" type="password"
+                           placeholder="Input your password">
                 </div>
                 <button class="button-login">Log In</button>
             </form>
@@ -131,7 +132,7 @@
             <div class="textOfError" data-target="textError"></div>
         </template>
         <div id="textarea-for-error"></div>
-        <button class="button-return"> Close </button>
+        <button class="button-return"> Close</button>
     </div>
 
     <template id="template-filteringPage">
@@ -140,24 +141,28 @@
                 <h2> Filtering posts </h2>
                 <div class="authors">
                     <input class="filters" type="checkbox" id="author" name="checkAuthor"><label
-                        for="author">Authors</label>
+                        for="author" class="filters">Authors</label>
                     <input class="filters" type="text" placeholder="Input author" name="inputAuthor">
                 </div>
                 <div class="date">
-                    <input class="filters" type="checkbox" id="date" name="checkDate"><label for="date">Date</label>
-                    <input class="filters" type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY" name="inputDate">
+                    <input class="filters" type="checkbox" id="date" name="checkDate"><label for="date" class="filters">Date</label>
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
+                           name="inputDate">
                 </div>
                 <div class="datePeriod">
                     <input class="filters" type="checkbox" id="dateBefore" name="checkDatePeriod">
-                    <label for="dateBefore">Date period</label>
-                    <input class="filters" type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY"
-                           name="inputDateBefore">
-                    <input class="filters" type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY"
+                    <label for="dateBefore" class="filters">Date period</label>
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
                            name="inputDateAfter">
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
+                           name="inputDateBefore">
                 </div>
                 <div class="filters">
                     <input class="filters" type="checkbox" id="hashtag" name="checkHashTags"><label
-                        for="hashtag">Hashtag</label>
+                        for="hashtag" class="filters">Hashtag</label>
                     <input class="filters" type="text" placeholder="Input hashtag" name="inputHashTags">
                 </div>
                 <button class="button-filter">Filter</button>

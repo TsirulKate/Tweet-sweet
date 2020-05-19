@@ -56,16 +56,16 @@ class View {
 
     }
 
-    renderAuthorizationPage(setPage, login,renderError) {
+    renderAuthorizationPage(setPage, login, renderError) {
         let authPageWrapper = document.getElementById("currentPage");
         authPageWrapper.innerHTML = "";
         let fragment = this.workWithTemplate("template-authorization-page", {});
         let logInButton = fragment.querySelector("form");
         logInButton.addEventListener("submit", (e) => {
+            e.preventDefault();
             if (e.target.login.value) {
                 login(e.target.login.value);
-            }
-            else{
+            } else {
                 renderError("Incorrect data at authorization");
             }
         });
@@ -188,11 +188,11 @@ class View {
                 filters.author = e.target.inputAuthor.value;
             }
             if (e.target.checkDate.checked) {
-                filters.date = e.target.inputDate.value;
+                filters.date = moment(e.target.inputDate.value).toDate();
             }
             if (e.target.checkDatePeriod.checked) {
-                filters.date_after = e.target.inputDateAfter.value;
-                filters.date_before = e.target.inputDateBefore.value;
+                filters.date_after = moment(e.target.inputDateAfter.value).toDate();
+                filters.date_before = moment(e.target.inputDateBefore.value).add("days", 1).toDate();
             }
             if (e.target.checkHashTags.checked) {
                 filters.hashTags = e.target.inputHashTags.value.split(" ");
@@ -202,11 +202,11 @@ class View {
         filteringPageWrapper.appendChild(fragment);
     }
 
-    renderError(textOfError,setErrorField){
+    renderError(textOfError, setErrorField) {
         setErrorField();
-        let errorWrapper=document.getElementById("textarea-for-error");
-        let fragment=this.workWithTemplate("template-textarea-for-error",{
-            textError:textOfError
+        let errorWrapper = document.getElementById("textarea-for-error");
+        let fragment = this.workWithTemplate("template-textarea-for-error", {
+            textError: textOfError
         });
         errorWrapper.appendChild(fragment);
     }
