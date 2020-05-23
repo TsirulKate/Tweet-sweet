@@ -233,10 +233,12 @@ class TweetList {
     }
 
     workWithLike(postId, user) {
-        if (this.getPost(postId).likes != null && this.getPost(postId).likes.includes(user)) {
-            this.removeLike(postId, user);
-        } else {
-            this.addLike(postId, user);
+        if (user) {
+            if (this.getPost(postId).likes != null && this.getPost(postId).likes.includes(user)) {
+                this.removeLike(postId, user);
+            } else {
+                this.addLike(postId, user);
+            }
         }
     }
 

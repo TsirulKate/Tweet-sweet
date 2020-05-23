@@ -25,7 +25,7 @@ const POSTS = [
         "createdAt": "2020-02-15T16:56:23",
         "author": "Marie Curie",
         "hashTags": ["#fear", "#understand"],
-        "likes": ["Lolita", "Pasha", "Egor B", "Meril", "Leonardo "]
+        "likes": ["Lolita", "Pasha", "Egor B", "Meril", "Leonardo"]
     },
     {
         "id": "4",
@@ -220,6 +220,9 @@ class App {
     setFilters(filters) {
         this.filters = filters;
         this.setPage("posts");
+        if (this.tweetList.getPosts(0, this.top, this.filters).length <= 11) {
+            this.loadMore.classList.add("shadow");
+        }
     }
 
     setTop() {

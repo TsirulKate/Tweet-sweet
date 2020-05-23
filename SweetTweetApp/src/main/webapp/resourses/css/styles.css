@@ -353,8 +353,8 @@ h4 {
 }
 
 .creator {
-    margin-bottom: 5%;
-    justify-content: center;
+    margin: 0 auto 5% auto;
+    width: 160px;
 }
 
 .field-for-description {
