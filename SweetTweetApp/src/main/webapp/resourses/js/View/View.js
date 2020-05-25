@@ -150,6 +150,7 @@ class View {
         img.src = "resourses/images/91e83b00c27bf4d5bb849a6ac2b81fe5.jpg";
         badAvatar.appendChild(img);
         addEditForm.addEventListener("submit", (e) => {
+            e.preventDefault();
             if (e.target.description.value) {
                 if (operation == "add") {
                     funcForWork({
@@ -184,6 +185,7 @@ class View {
             hashTags: null
         };
         filterButton.addEventListener("submit", (e) => {
+            e.preventDefault();
             if (e.target.checkAuthor.checked) {
                 filters.author = e.target.inputAuthor.value;
             }

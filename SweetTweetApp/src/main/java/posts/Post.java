@@ -38,6 +38,8 @@ public final class Post {
         return id;
     }
 
+    public void setId(String postId) { this.id = postId; }
+
     public String getDescription() {
         return description;
     }

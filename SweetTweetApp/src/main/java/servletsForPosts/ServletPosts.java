@@ -1,5 +1,6 @@
 package servletsForPosts;
 
+import org.apache.commons.io.IOUtils;
 import posts.Post;
 import posts.PostCollection;
 import posts.EditInfo;
@@ -42,21 +43,20 @@ public class ServletPosts extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Post post = Post.fromJson(request.getParameter("info"));
+        Post post = Post.fromJson(IOUtils.toString(request.getReader()));
+
         PostCollection postCollection = new PostCollection();
+        post.setId(PostCollection.getAvailableId());
 
-        if (post == null) {
-            sendError(400, "Invalidate post", response);
-            return;
-        }
-
-        if (PostCollection.hasPost(post.getId())) {
+        if (!PostCollection.hasPost(post.getId())) {
             if (PostCollection.addPost(post)) {
                 sendMessage(200, "Post was added", response);
             } else {
+                System.out.println(">>> INVALIDATE POST");
                 sendError(400, "Invalidate post", response);
             }
         } else {
+            System.out.println(">>> post is exist");
             sendError(400, "Post is exist", response);
         }
     }
@@ -64,7 +64,7 @@ public class ServletPosts extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         PostCollection postCollection = new PostCollection();
-        EditInfo editInfo = EditInfo.fromJson(request.getParameter("info"));
+        EditInfo editInfo = EditInfo.fromJson(IOUtils.toString(request.getReader()));
         if (editInfo == null) {
             System.out.println(">>> EditInfo is null" + request.getParameter("info"));
             sendError(400, "Invalidate post", response);

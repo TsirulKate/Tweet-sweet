@@ -176,6 +176,7 @@ class App {
         if (this.tweetList._posts.length === 0) {
             this.tweetList.addAll(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
         }
+        this.postService = new PostsService();
         this.currentUser = localStorage.getItem("user");
         this.view = new View();
         this.viewPosts = null;
@@ -220,9 +221,9 @@ class App {
     setFilters(filters) {
         this.filters = filters;
         this.setPage("posts");
-        if (this.tweetList.getPosts(0, this.top, this.filters).length <= 11) {
-            this.loadMore.classList.add("shadow");
-        }
+        //if (this.tweetList.getPosts(0, this.top, this.filters).length <= 11) {
+        //  this.loadMore.classList.add("shadow");
+        // }
     }
 
     setTop() {
@@ -234,9 +235,9 @@ class App {
         this.loadMore = button;
         this.loadMore.addEventListener("click", () => {
             this.setTop();
-            if (this.isFull()) {
+            /*if (this.isFull()) {
                 this.loadMore.classList.add("shadow");
-            }
+            }*/
         });
     }
 
@@ -280,15 +281,16 @@ class App {
         }
     }
 
-    renderPosts() {
-        this.viewPosts = this.tweetList.getPosts(0, this.top, this.filters);
+    async renderPosts() {
+        //this.viewPosts = this.tweetList.getPosts(0, this.top, this.filters);
+        this.viewPosts = await this.postService.getPosts(0, this.top, this.filters);
         if (this.viewPosts === "Incorrect data") {
             this.renderError(this.viewPosts);
         }
         this.view.renderPostsPage(this.viewPosts, this.currentUser, this.setPostForDeleting.bind(this),
             this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this),
             this.setButtonLoad.bind(this));
-        if (this.viewPosts.length === 0 || this.viewPosts.length === this.tweetList._posts.length) {
+        if (this.viewPosts.length < this.top) {
             this.loadMore.classList.add("shadow");
         }
         this.filtering = document.querySelector(".filtering-button");
@@ -300,13 +302,13 @@ class App {
         this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this), this.renderError.bind(this));
     }
 
-    renderAddEditPage() {
+    async renderAddEditPage() {
         if (this.operation === "add") {
             this.top = 10;
             this.view.renderAddEditPage(this.currentUser, this.operation, {}, this.tweetList._availableId, this.addPost.bind(this));
         } else {
             this.top = 10;
-            this.view.renderAddEditPage(this.currentUser, this.operation, this.tweetList.getPost(this.operation), null, this.editPost.bind(this));
+            this.view.renderAddEditPage(this.currentUser, this.operation, await this.postService.getPost(this.operation), null, this.editPost.bind(this));
         }
     }
 
@@ -318,24 +320,24 @@ class App {
         this.view.renderError(textError, this.setErrorField.bind(this));
     }
 
-    addPost(post) {
-        if (this.tweetList.addPost(post)) {
+    async addPost(post) {
+        if (await this.postService.addPost(post)) {
             this.top = 10;
             this.setPage("posts");
         }
 
     }
 
-    deletePost(postID) {
+    async deletePost(postID) {
         this.top = 10;
-        if (this.tweetList.removePost(postID)) {
+        if (await this.postService.removePost(postID)) {
             this.setPage("posts");
         }
     }
 
-    editPost(postID, post) {
+    async editPost(postID, post) {
         this.top = 10;
-        if (this.tweetList.editPost(postID, post)) {
+        if (await this.postService.editPost(postID, post)) {
             this.setPage("posts");
         }
     }

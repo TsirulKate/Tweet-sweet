@@ -5,101 +5,101 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <!-- Servlets and filters for Task 5 -->
-  <servlet>
-    <servlet-name>ServletStatus</servlet-name>
-    <servlet-class>servlets.ServletStatus</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletStatus</servlet-name>
-    <url-pattern>/status</url-pattern>
-  </servlet-mapping>
+    <display-name>Archetype Created Web Application</display-name>
+    <!-- Servlets and filters for Task 5 -->
+    <servlet>
+        <servlet-name>ServletStatus</servlet-name>
+        <servlet-class>servlets.ServletStatus</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletStatus</servlet-name>
+        <url-pattern>/status</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletTest1</servlet-name>
-    <servlet-class>servlets.ServletTest1</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletTest1</servlet-name>
-    <url-pattern>/test1</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletTest1</servlet-name>
+        <servlet-class>servlets.ServletTest1</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletTest1</servlet-name>
+        <url-pattern>/test1</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletName</servlet-name>
-    <servlet-class>servlets.ServletName</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletName</servlet-name>
-    <url-pattern>/get</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletName</servlet-name>
+        <servlet-class>servlets.ServletName</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletName</servlet-name>
+        <url-pattern>/get</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletSucess</servlet-name>
-    <servlet-class>servlets.ServletSucess</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletSucess</servlet-name>
-    <url-pattern>/check</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletSucess</servlet-name>
+        <servlet-class>servlets.ServletSucess</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletSucess</servlet-name>
+        <url-pattern>/check</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletPage</servlet-name>
-    <servlet-class>servlets.ServletPage</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletPage</servlet-name>
-    <url-pattern>/page</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletPage</servlet-name>
+        <servlet-class>servlets.ServletPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletPage</servlet-name>
+        <url-pattern>/page</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletTest2</servlet-name>
-    <servlet-class>servlets.ServletTest2</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletTest2</servlet-name>
-    <url-pattern>/test2</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletTest2</servlet-name>
+        <servlet-class>servlets.ServletTest2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletTest2</servlet-name>
+        <url-pattern>/test2</url-pattern>
+    </servlet-mapping>
 
-  <filter>
-    <filter-name>FilterTime</filter-name>
-    <filter-class>filters.FilterTime</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>FilterTime</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter>
+        <filter-name>FilterTime</filter-name>
+        <filter-class>filters.FilterTime</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterTime</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <!-- End Task 5 -->
+    <!-- End Task 5 -->
 
-  <!-- Servlets for Task 8 -->
+    <!-- Servlets for Task 8 -->
 
-  <servlet>
-    <servlet-name>ServletPosts</servlet-name>
-    <servlet-class>servletsForPosts.ServletPosts</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletPosts</servlet-name>
-    <url-pattern>/tweets</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletPosts</servlet-name>
+        <servlet-class>servletsForPosts.ServletPosts</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletPosts</servlet-name>
+        <url-pattern>/tweets</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletTweetList</servlet-name>
-    <servlet-class>servletsForPosts.ServletTweetList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletTweetList</servlet-name>
-    <url-pattern>/tweets/search</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletTweetList</servlet-name>
+        <servlet-class>servletsForPosts.ServletTweetList</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletTweetList</servlet-name>
+        <url-pattern>/tweets/search</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>ServletInitPosts</servlet-name>
-    <servlet-class>servletsForPosts.ServletInitPosts</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletInitPosts</servlet-name>
-    <url-pattern>/init</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletInitPosts</servlet-name>
+        <servlet-class>servletsForPosts.ServletInitPosts</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletInitPosts</servlet-name>
+        <url-pattern>/init</url-pattern>
+    </servlet-mapping>
 
-  <!-- End Task 8 -->
+    <!-- End Task 8 -->
 </web-app>
