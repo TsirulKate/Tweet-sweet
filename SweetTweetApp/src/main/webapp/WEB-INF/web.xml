@@ -98,8 +98,37 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletInitPosts</servlet-name>
-        <url-pattern>/init</url-pattern>
+        <url-pattern>/initPosts</url-pattern>
     </servlet-mapping>
 
     <!-- End Task 8 -->
+
+    <!-- Servlets for Task 12 -->
+    <servlet>
+        <servlet-name>ServletInitUsers</servlet-name>
+        <servlet-class>servletsForUsers.ServletInitUsers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletInitUsers</servlet-name>
+        <url-pattern>/initUsers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletUsers</servlet-name>
+        <servlet-class>servletsForUsers.ServletUsers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUsers</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletLogOutUser</servlet-name>
+        <servlet-class>servletsForUsers.ServletLogOutUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletLogOutUser</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <!-- End Task 12 -->
 </web-app>

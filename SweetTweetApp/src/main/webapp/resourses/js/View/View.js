@@ -33,7 +33,7 @@ class View {
             badAvatar.appendChild(img);
             let logOutButton = fragmentField.querySelector(".button-log");
             let addPostButton = fragmentField.querySelector(".button-add");
-            logOutButton.addEventListener("click", () => login(null));
+            logOutButton.addEventListener("click", () => login(null, null));
             addPostButton.addEventListener("click", () => {
                 operation("add");
                 setPage("addEditPage");
@@ -63,8 +63,8 @@ class View {
         let logInButton = fragment.querySelector("form");
         logInButton.addEventListener("submit", (e) => {
             e.preventDefault();
-            if (e.target.login.value) {
-                login(e.target.login.value);
+            if (e.target.login.value && e.target.password.value) {
+                login(e.target.login.value, e.target.password.value);
             } else {
                 renderError("Incorrect data at authorization");
             }

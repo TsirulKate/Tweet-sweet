@@ -1,7 +1,7 @@
 class PostsService {
 
     async init() {
-        await fetch("/init");
+        await fetch("/initPosts");
     }
 
     async getPosts(skip = 0, top = 10, filterConfig) {

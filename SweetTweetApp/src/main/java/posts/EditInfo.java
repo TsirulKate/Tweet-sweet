@@ -1,8 +1,7 @@
 package posts;
 
-import servletsForPosts.JSONDecorator;
+import JSONDecorator.JSONDecorator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EditInfo {

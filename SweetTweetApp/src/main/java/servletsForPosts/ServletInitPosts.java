@@ -1,5 +1,6 @@
 package servletsForPosts;
 
+import JSONDecorator.JSONDecorator;
 import org.apache.commons.io.IOUtils;
 import posts.Post;
 import posts.PostCollection;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class ServletInitPosts extends HttpServlet {
 
