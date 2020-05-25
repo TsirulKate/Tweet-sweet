@@ -177,6 +177,7 @@ class App {
             this.tweetList.addAll(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
         }
         this.postService = new PostsService();
+        this.init();
         this.currentUser = localStorage.getItem("user");
         this.view = new View();
         this.viewPosts = null;
@@ -197,6 +198,10 @@ class App {
             this.message.classList.remove("emergence");
         });
         this.cancel.addEventListener("click", () => this.message.classList.remove("emergence"));
+    }
+
+    init(){
+        this.postService.init();
     }
 
     login(user) {
@@ -305,10 +310,10 @@ class App {
     async renderAddEditPage() {
         if (this.operation === "add") {
             this.top = 10;
-            this.view.renderAddEditPage(this.currentUser, this.operation, {}, this.tweetList._availableId, this.addPost.bind(this));
+            this.view.renderAddEditPage(this.currentUser, this.operation, {}, 0, this.addPost.bind(this),this.renderError.bind(this));
         } else {
             this.top = 10;
-            this.view.renderAddEditPage(this.currentUser, this.operation, await this.postService.getPost(this.operation), null, this.editPost.bind(this));
+            this.view.renderAddEditPage(this.currentUser, this.operation, await this.postService.getPost(this.operation), null, this.editPost.bind(this),this.renderError.bind(this));
         }
     }
 

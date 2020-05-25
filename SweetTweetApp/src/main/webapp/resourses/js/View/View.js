@@ -121,7 +121,7 @@ class View {
         return fragment;
     }
 
-    renderAddEditPage(currentUser, operation, post, availableID, funcForWork, setPage) {
+    renderAddEditPage(currentUser, operation, post, tempID, funcForWork, renderError) {
         let addEditPageWrapper = document.getElementById("currentPage");
         addEditPageWrapper.innerHTML = "";
         let text, fragment;
@@ -154,7 +154,7 @@ class View {
             if (e.target.description.value) {
                 if (operation == "add") {
                     funcForWork({
-                        id: String(availableID),
+                        id: String(tempID),
                         description: e.target.description.value,
                         createdAt: new Date(),
                         author: currentUser,
@@ -167,8 +167,11 @@ class View {
                         hashTags: e.target.hashtags.value.split(" ")
                     });
                 }
+            } else {
+                renderError("Empty description");
             }
-        });
+        })
+        ;
         addEditPageWrapper.appendChild(fragment);
     }
 
