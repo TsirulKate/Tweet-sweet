@@ -1,4 +1,4 @@
-package servletsForPosts;
+package JSONDecorator;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,9 +6,9 @@ import com.google.gson.JsonElement;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 
 public class JSONDecorator {
-    static Gson gson;
+    public static Gson gson;
 
-    JSONDecorator() {
+    public JSONDecorator() {
         gson = new GsonBuilder().registerTypeAdapterFactory(new GsonJava8TypeAdapterFactory()).create();
     }
 

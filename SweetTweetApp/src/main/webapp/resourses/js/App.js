@@ -177,8 +177,9 @@ class App {
             this.tweetList.addAll(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
         }
         this.postService = new PostsService();
+        this.logService = new LogService();
         this.init();
-        this.currentUser = localStorage.getItem("user");
+        this.currentUser = null;
         this.view = new View();
         this.viewPosts = null;
         this.filters = null;
@@ -198,18 +199,33 @@ class App {
             this.message.classList.remove("emergence");
         });
         this.cancel.addEventListener("click", () => this.message.classList.remove("emergence"));
+    this.checkLogin();
     }
 
-    init(){
+    init() {
         this.postService.init();
+        this.logService.init();
     }
 
-    login(user) {
-        this.currentUser = user;
-        if (user) {
-            localStorage.setItem("user", user);
-        } else {
-            localStorage.removeItem("user");
+    async checkLogin() {
+        const user = await this.logService.checkLogin();
+        this.currentUser = user ? user.username : null;
+        this.renderPage("posts");
+    }
+
+    async login(user, password) {
+        if(!user){
+            this.currentUser=null;
+            this.logService.logout();
+        }
+        else {
+            try {
+                let result = await this.logService.authentication(user, password);
+                this.currentUser = result.username;
+            }
+            catch (e) {
+                this.renderError(e.message);
+            }
         }
         this.setPage("posts");
     }
@@ -310,10 +326,10 @@ class App {
     async renderAddEditPage() {
         if (this.operation === "add") {
             this.top = 10;
-            this.view.renderAddEditPage(this.currentUser, this.operation, {}, 0, this.addPost.bind(this),this.renderError.bind(this));
+            this.view.renderAddEditPage(this.currentUser, this.operation, {}, 0, this.addPost.bind(this), this.renderError.bind(this));
         } else {
             this.top = 10;
-            this.view.renderAddEditPage(this.currentUser, this.operation, await this.postService.getPost(this.operation), null, this.editPost.bind(this),this.renderError.bind(this));
+            this.view.renderAddEditPage(this.currentUser, this.operation, await this.postService.getPost(this.operation), null, this.editPost.bind(this), this.renderError.bind(this));
         }
     }
 

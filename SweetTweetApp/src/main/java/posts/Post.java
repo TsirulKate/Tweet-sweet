@@ -1,6 +1,6 @@
 package posts;
 
-import servletsForPosts.JSONDecorator;
+import JSONDecorator.JSONDecorator;
 
 import java.time.LocalDateTime;
 import java.util.List;
