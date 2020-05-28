@@ -1,6 +1,6 @@
 package posts;
 
-import servletsForPosts.JSONDecorator;
+import JSONDecorator.JSONDecorator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,6 +37,8 @@ public final class Post {
     public String getId() {
         return id;
     }
+
+    public void setId(String postId) { this.id = postId; }
 
     public String getDescription() {
         return description;

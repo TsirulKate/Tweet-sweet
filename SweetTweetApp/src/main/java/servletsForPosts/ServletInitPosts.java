@@ -1,5 +1,6 @@
 package servletsForPosts;
 
+import JSONDecorator.JSONDecorator;
 import org.apache.commons.io.IOUtils;
 import posts.Post;
 import posts.PostCollection;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class ServletInitPosts extends HttpServlet {
 
@@ -22,8 +22,10 @@ public class ServletInitPosts extends HttpServlet {
         ServletContext servletContext = getServletContext();
         InputStream inputStream = servletContext.getResourceAsStream("posts.json");
         String src;
+        JSONDecorator jsonD = new JSONDecorator();
         try {
             src = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+
             Post[] masPosts = JSONDecorator.gson.fromJson(src, Post[].class);
             for (Post post : masPosts) {
                 PostCollection.addPost(post);
@@ -37,12 +39,12 @@ public class ServletInitPosts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream())) {
-            writer.write("Array of posts is initialized\n");
+            /*writer.write("Array of posts is initialized\n");
             //pf.sortByDateDescending();
             List<Post> posts = PostCollection.getPosts(0, 20, null);
             for (Post post : posts) {
-                writer.write(post.toString());
-            }
+                //writer.write(post.toString());
+            }*/
         }
     }
 }

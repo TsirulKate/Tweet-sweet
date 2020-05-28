@@ -33,7 +33,7 @@ class View {
             badAvatar.appendChild(img);
             let logOutButton = fragmentField.querySelector(".button-log");
             let addPostButton = fragmentField.querySelector(".button-add");
-            logOutButton.addEventListener("click", () => login(null));
+            logOutButton.addEventListener("click", () => login(null, null));
             addPostButton.addEventListener("click", () => {
                 operation("add");
                 setPage("addEditPage");
@@ -63,8 +63,8 @@ class View {
         let logInButton = fragment.querySelector("form");
         logInButton.addEventListener("submit", (e) => {
             e.preventDefault();
-            if (e.target.login.value) {
-                login(e.target.login.value);
+            if (e.target.login.value && e.target.password.value) {
+                login(e.target.login.value, e.target.password.value);
             } else {
                 renderError("Incorrect data at authorization");
             }
@@ -121,7 +121,7 @@ class View {
         return fragment;
     }
 
-    renderAddEditPage(currentUser, operation, post, availableID, funcForWork, setPage) {
+    renderAddEditPage(currentUser, operation, post, tempID, funcForWork, renderError) {
         let addEditPageWrapper = document.getElementById("currentPage");
         addEditPageWrapper.innerHTML = "";
         let text, fragment;
@@ -150,10 +150,11 @@ class View {
         img.src = "resourses/images/91e83b00c27bf4d5bb849a6ac2b81fe5.jpg";
         badAvatar.appendChild(img);
         addEditForm.addEventListener("submit", (e) => {
+            e.preventDefault();
             if (e.target.description.value) {
                 if (operation == "add") {
                     funcForWork({
-                        id: String(availableID),
+                        id: String(tempID),
                         description: e.target.description.value,
                         createdAt: new Date(),
                         author: currentUser,
@@ -166,8 +167,11 @@ class View {
                         hashTags: e.target.hashtags.value.split(" ")
                     });
                 }
+            } else {
+                renderError("Empty description");
             }
-        });
+        })
+        ;
         addEditPageWrapper.appendChild(fragment);
     }
 
@@ -184,6 +188,7 @@ class View {
             hashTags: null
         };
         filterButton.addEventListener("submit", (e) => {
+            e.preventDefault();
             if (e.target.checkAuthor.checked) {
                 filters.author = e.target.inputAuthor.value;
             }

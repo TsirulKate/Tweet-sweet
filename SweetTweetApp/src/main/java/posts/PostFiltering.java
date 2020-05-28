@@ -25,7 +25,6 @@ public class PostFiltering {
     }
 
     public boolean test(Post post) {
-        System.out.println(">>>" + Arrays.toString(hashTags));
         if (this.dateAfter != null && !this.dateAfter.isBefore(post.getCreatedAt())) {
             return false;
         }

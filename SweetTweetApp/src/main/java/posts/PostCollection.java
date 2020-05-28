@@ -8,8 +8,13 @@ import java.util.stream.Stream;
 public class PostCollection {
 
     private static HashMap<String, Post> posts = new HashMap<>();
+    public static int availableId = 2;
 
     public PostCollection() {
+    }
+
+    public static String getAvailableId() {
+        return Integer.toString(availableId);
     }
 
     public static List<Post> getAllPosts() {
@@ -29,9 +34,7 @@ public class PostCollection {
             top = 10;
         }
 
-        sortByDateDescending();
-
-        Collection<Post> collectionPosts = posts.values();
+        Collection<Post> collectionPosts = sortByDateDescending();
 
         if (filters == null) {
             return collectionPosts.stream().skip(skip).limit(top).collect(Collectors.toList());
@@ -60,10 +63,13 @@ public class PostCollection {
 
     public static boolean addPost(Post post) {
         if (!PostCollection.validatePost(post)) {
+            System.out.println(">>> INVALIDATE");
             return false;
         } else if (hasPost(post.getId())) {
+            System.out.println(">>> HAS POST");
             return false;
         } else {
+            availableId++;
             posts.put(post.getId(), post);
             return true;
         }
@@ -74,19 +80,19 @@ public class PostCollection {
             return false;
         }
         Post post = posts.get(postId);
-        if(editInformation.hasDescription()){
+        if (editInformation.hasDescription()) {
             post.setDescription(editInformation.getDescription());
         }
-        if(editInformation.hasPhotoLink()){
+        if (editInformation.hasPhotoLink()) {
             post.setPhotoLink(editInformation.getPhotoLink());
         }
-        if(editInformation.hasLikes()){
+        if (editInformation.hasLikes()) {
             post.setLikes(editInformation.getLikes());
         }
-        if(editInformation.hasHashTags()){
+        if (editInformation.hasHashTags()) {
             post.setHashTags(editInformation.getHashTags());
         }
-        posts.put(postId,post);
+        posts.put(postId, post);
         return true;
     }
 
@@ -99,7 +105,7 @@ public class PostCollection {
         }
     }
 
-    public static void sortByDateDescending() {
-        posts.entrySet().stream().sorted(Map.Entry.comparingByValue(new ComparatorForPosts()));
+    public static List<Post> sortByDateDescending() {
+        return posts.values().stream().sorted(new ComparatorForPosts()).collect(Collectors.toList());
     }
 }
