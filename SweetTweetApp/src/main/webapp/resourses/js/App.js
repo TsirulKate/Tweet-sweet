@@ -17,7 +17,7 @@ const POSTS = [
         "createdAt": "2020-02-14T21:56:21",
         "author": "Sean C",
         "hashTags": ["#moving", "#world", "#travelling"],
-        "likes": ["Alexander T","Lola", "Paula", "Egor B", "Vlada", "Masha U"]
+        "likes": ["Alexander T", "Lola", "Paula", "Egor B", "Vlada", "Masha U"]
     },
     {
         "id": "3",
@@ -25,7 +25,7 @@ const POSTS = [
         "createdAt": "2020-02-15T16:56:23",
         "author": "Marie Curie",
         "hashTags": ["#fear", "#understand"],
-        "likes": ["Lolita", "Pasha", "Egor B", "Meril", "Leonardo "]
+        "likes": ["Lolita", "Pasha", "Egor B", "Meril", "Leonardo"]
     },
     {
         "id": "4",
@@ -170,30 +170,186 @@ const POSTS = [
 class App {
 
     constructor() {
-        this.tweetList = new TweetList(POSTS.map((p) => ({ ...p, createdAt: new Date(p.createdAt ) })));
+        //this.tweetList = new TweetList(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
+        this.tweetList = new TweetList();
+        this.tweetList.restore();
+        if (this.tweetList._posts.length === 0) {
+            this.tweetList.addAll(POSTS.map((p) => ({...p, createdAt: new Date(p.createdAt)})));
+        }
+        this.currentUser = localStorage.getItem("user");
+        this.view = new View();
+        this.viewPosts = null;
+        this.filters = null;
+        this.top = 10;
+        this.currentPage = "posts";
+        this.operation = null;
+        this.confirm = document.querySelector(".button-delete-post-on-field");
+        this.cancel = document.querySelector(".button-cancel");
+        this.message = document.querySelector(".field-for-deleting");
+        this.error = document.querySelector(".field-for-error");
+        this.loadMore = null;
+        this.closeButton = null;
+        this.filtering = null;
+        this.postForDeleting = null;
+        this.confirm.addEventListener("click", () => {
+            this.deletePost(this.postForDeleting);
+            this.message.classList.remove("emergence");
+        });
+        this.cancel.addEventListener("click", () => this.message.classList.remove("emergence"));
+    }
+
+    login(user) {
+        this.currentUser = user;
+        if (user) {
+            localStorage.setItem("user", user);
+        } else {
+            localStorage.removeItem("user");
+        }
+        this.setPage("posts");
+    }
+
+    setPage(page) {
+        this.currentPage = page;
+        this.renderPage();
+    }
+
+    setOperation(operation) {
+        this.operation = operation;
+    }
+
+    setFilters(filters) {
+        this.filters = filters;
+        this.setPage("posts");
+        if (this.tweetList.getPosts(0, this.top, this.filters).length <= 11) {
+            this.loadMore.classList.add("shadow");
+        }
+    }
+
+    setTop() {
+        this.top += 10;
+        this.setPage("posts");
+    }
+
+    setButtonLoad(button) {
+        this.loadMore = button;
+        this.loadMore.addEventListener("click", () => {
+            this.setTop();
+            if (this.isFull()) {
+                this.loadMore.classList.add("shadow");
+            }
+        });
+    }
+
+    setPostForDeleting(postId) {
+        this.postForDeleting = postId;
+        this.message.classList.add("emergence");
+    }
+
+    setErrorField() {
+        this.error.classList.add("emergence");
+        this.closeButton = document.querySelector(".button-return");
+        this.closeButton.addEventListener("click", () => {
+                this.error.classList.remove("emergence");
+                this.setPage("posts")
+            }
+        );
+    }
+
+    isFull() {
+        return this.top >= (this.tweetList._availableId - 1);
+    }
+
+    renderPage() {
+        switch (this.currentPage) {
+            case "posts": {
+                this.renderPosts();
+                break;
+            }
+            case "authorization": {
+                this.renderAuthPage();
+                break;
+            }
+            case "addEditPage": {
+                this.renderAddEditPage();
+                break;
+            }
+            case "filtering": {
+                this.renderFilteringPosts();
+                break;
+            }
+        }
     }
 
     renderPosts() {
-        let view = new View();
-        view.addPostsToNewsLine(this.tweetList.getPosts(), "Alexander T");
+        this.viewPosts = this.tweetList.getPosts(0, this.top, this.filters);
+        if (this.viewPosts === "Incorrect data") {
+            this.renderError(this.viewPosts);
+        }
+        this.view.renderPostsPage(this.viewPosts, this.currentUser, this.setPostForDeleting.bind(this),
+            this.setOperation.bind(this), this.setPage.bind(this), this.login.bind(this), this.workWithLike.bind(this),
+            this.setButtonLoad.bind(this));
+        if (this.viewPosts.length === 0 || this.viewPosts.length === this.tweetList._posts.length) {
+            this.loadMore.classList.add("shadow");
+        }
+        this.filtering = document.querySelector(".filtering-button");
+        this.filtering.addEventListener("click", () => this.setPage("filtering"));
     }
 
-    addPost(post){
-        if(this.tweetList.addPost(post)){
-            this.renderPosts();
+    renderAuthPage() {
+        this.top = 10;
+        this.view.renderAuthorizationPage(this.setPage.bind(this), this.login.bind(this), this.renderError.bind(this));
+    }
+
+    renderAddEditPage() {
+        if (this.operation === "add") {
+            this.top = 10;
+            this.view.renderAddEditPage(this.currentUser, this.operation, {}, this.tweetList._availableId, this.addPost.bind(this));
+        } else {
+            this.top = 10;
+            this.view.renderAddEditPage(this.currentUser, this.operation, this.tweetList.getPost(this.operation), null, this.editPost.bind(this));
         }
     }
 
-    deletePost(postID){
-        if(this.tweetList.removePost(postID)){
-            this.renderPosts();
+    renderFilteringPosts() {
+        this.view.renderFilteringPosts(this.setFilters.bind(this));
+    }
+
+    renderError(textError) {
+        this.view.renderError(textError, this.setErrorField.bind(this));
+    }
+
+    addPost(post) {
+        if (this.tweetList.addPost(post)) {
+            this.top = 10;
+            this.setPage("posts");
+        }
+
+    }
+
+    deletePost(postID) {
+        this.top = 10;
+        if (this.tweetList.removePost(postID)) {
+            this.setPage("posts");
         }
     }
 
-    editPost(postID,post){
-        if(this.tweetList.editPost(postID,post)){
-            this.renderPosts();
+    editPost(postID, post) {
+        this.top = 10;
+        if (this.tweetList.editPost(postID, post)) {
+            this.setPage("posts");
         }
     }
+
+    /*filteringPosts() {
+        if (this.tweetList.getPosts(0, this.top, this.filters)) {
+            this.setPage("posts");
+        }
+    }*/
+
+    workWithLike(postId) {
+        this.tweetList.workWithLike(postId, this.currentUser);
+        this.setPage("posts");
+    }
+
 
 }

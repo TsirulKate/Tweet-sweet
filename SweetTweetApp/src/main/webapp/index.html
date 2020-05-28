@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Sweet Tweet</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/solid.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/solid.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="resourses/css/styles.css">
     <meta name="viewport" content="width, initial-scale=1.0">
 </head>
@@ -14,75 +14,177 @@
     <h1> Sweet Tweet </h1>
 </header>
 <main>
-    <div class="field-user">
+
+    <template id="template-field-user">
         <div>
-            <img class="avatar" src="resourses/images/91e83b00c27bf4d5bb849a6ac2b81fe5.jpg">
-            Alexander T
+            <div class="bad-avatar"></div>
+            <span data-target="user"> </span>
         </div>
         <div>
-            <button class = "button-add">Add post</button>
-            <button class = "button-log">Log out</button>
+            <button class="button-add">Add post</button>
+            <button class="button-log">Log out</button>
         </div>
-    </div>
+    </template>
 
-    <div class="mobile-filtering">
-        <div class="filters-selected">Filters that are used</div>
-        <button class="mobile-filtering--button">
-            <i class="fas fa-filter"></i>
-        </button>
-    </div>
-    <div class="main-field">
-            <div class="filtering"> <h2> Filtering posts</h2>
-                <p>
-                    <input class="filters" type="checkbox" id="author"><label for="author">Authors</label>
-                    <input class="filters" type="text" placeholder="Input author">
-                    <button class="add-filter">+Add more</button>
-                    <input class="filters" type="checkbox" id="date"><label for="date">Date</label>
-                    <input class="filters" type="text" pattern="DD/MM/EEEE" placeholder="DD/MM/YYYY">
-                    <input class="filters" type="checkbox" id="hashtag"><label for="hashtag">Hashtag</label>
-                    <input class="filters" type="text" placeholder="Input hashtag">
-                    <button class="add-filter">+Add more</button>
-                </p>
-            </div>
+    <template id="template-auth-button">
+        <button class="button-authorization">Authorization</button>
+    </template>
 
-        <template id = "template-post">
-            <div class ="post">
-                <div class="post-header">
-                    <div class="username"><div class="bad-avatar"> </div>
-                        <span data-target="author"> </span>  </div>
-                    <div  class="buttons">
-                        <button class="user-button">Edit Post</button>
-                        <button class="user-button"> Delete Post </button>
-                    </div>
+    <template id="template-post">
+        <div class="post">
+            <div class="post-header">
+                <div class="username">
+                    <div class="bad-avatar"></div>
+                    <span data-target="author"> </span>
                 </div>
-                <p data-target="description"></p>
-                <h5 data-target="hashTags"></h5>
-                <img class = "images" data-target="photoLink" data-target-src = "src" />
-                <div class="post-footer">
-                    <div class="like" >
-                        <i class="fas fa-heart"></i>
-                        <span data-target="likesCount"></span>
-                    </div>
-                    <p class="post-date" data-target="postDate"></p>
+                <div class="buttons">
+                    <button class="user-button button-edit">Edit Post</button>
+                    <button class="user-button button-delete"> Delete Post</button>
                 </div>
             </div>
+            <p data-target="description"></p>
+            <h5 data-target="hashTags"></h5>
+            <img class="images" data-target="photoLink" data-target-src="src"/>
+            <div class="post-footer">
+                <div class="like">
+                    <i class="fas fa-heart"></i>
+                    <span data-target="likesCount"></span>
+                </div>
+                <p class="post-date" data-target="postDate"></p>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-posts-page">
+
+        <div class="field-user"></div>
+
+        <div class="field-filtering">
+            <div class="filters-selected">Filters that are used</div>
+            <button class="filtering-button">
+                <i class="fas fa-filter fa-3x"></i>
+            </button>
+        </div>
+
+        <div class="main-field">
+            <div class="news-line"></div>
+        </div>
+
+        <div>
+            <p>
+                <button class="button-load">Load more</button>
+            </p>
+        </div>
+
+    </template>
+
+    <template id="template-authorization-page">
+        <div class="field-for-authorization">
+            <form>
+                <h3 class="heading">Authorization</h3>
+                <div class="oneLine login">
+                    <p> Login </p>
+                    <input class="authorization-log" name="login" type="text" placeholder="Input your nickname">
+                </div>
+                <div class="oneLine password">
+                    <p> Password </p>
+                    <input class="authorization-password" name="password" type="password"
+                           placeholder="Input your password">
+                </div>
+                <button class="button-login">Log In</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="template-add-edit-page">
+        <form>
+            <div class="field-for-form">
+                <div class="oneLine creator">
+                    <div class="bad-avatar"></div>
+                    <span data-target="user"> </span>
+                </div>
+                <textarea class="field-for-description" name="description" data-target="description" type="text"
+                          placeholder="Input your text(280 symbols)"></textarea>
+                <input class="field-for-hashtags" name="hashtags" data-target="hashtags" data-target-src="value"
+                       type="text" placeholder="Input your hashtags">
+                <div class="add-edit-post-footer">
+                    <button class="button-for-picture">
+                        <i class="fas fa-image fa-3x"></i>
+                    </button>
+                    <p data-target="currentDate" class="currentDate"></p>
+                </div>
+                <button class="button-upload-post" data-target="buttonUploadPost"></button>
+            </div>
+        </form>
+    </template>
+
+    <div id="currentPage"></div>
+
+    <div class="field-for-deleting">
+        <h3 class="heading"> Are you sure? </h3>
+        <button class="button-delete-post-on-field"> Delete</button>
+        <button class="button-cancel"> Cancel</button>
+    </div>
+
+    <div class="field-for-error">
+        <h3 class="error"> An error was occurred </h3>
+        <template id="template-textarea-for-error">
+            <div class="textOfError" data-target="textError"></div>
         </template>
-        <div id="news-line"></div>
+        <div id="textarea-for-error"></div>
+        <button class="button-return"> Close</button>
     </div>
-    <div>
-        <p><button class = "button-load">Load more</button></p>
-    </div>
+
+    <template id="template-filteringPage">
+        <form>
+            <div class="filtering">
+                <h2> Filtering posts </h2>
+                <div class="authors">
+                    <input class="filters" type="checkbox" id="author" name="checkAuthor"><label
+                        for="author" class="filters">Authors</label>
+                    <input class="filters" type="text" placeholder="Input author" name="inputAuthor">
+                </div>
+                <div class="date">
+                    <input class="filters" type="checkbox" id="date" name="checkDate"><label for="date" class="filters">Date</label>
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
+                           name="inputDate">
+                </div>
+                <div class="datePeriod">
+                    <input class="filters" type="checkbox" id="dateBefore" name="checkDatePeriod">
+                    <label for="dateBefore" class="filters">Date period</label>
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
+                           name="inputDateAfter">
+                    <input class="filters dateBox" type="text" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                           placeholder="YYYY-MM-DD"
+                           name="inputDateBefore">
+                </div>
+                <div class="filters">
+                    <input class="filters" type="checkbox" id="hashtag" name="checkHashTags"><label
+                        for="hashtag" class="filters">Hashtag</label>
+                    <input class="filters" type="text" placeholder="Input hashtag" name="inputHashTags">
+                </div>
+                <button class="button-filter">Filter</button>
+            </div>
+        </form>
+    </template>
+
 </main>
+
 <footer>
     <h4>
-        Sweet Tweet   katya.tsirul.01@mail.ru   Last changes: 24.02.2020   Creator: Ekaterina Tsirul   2 course 5 group
+        Sweet Tweet katya.tsirul.01@mail.ru Last changes: 24.02.2020 Creator: Ekaterina Tsirul 2 course 5 group
     </h4>
 </footer>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="resourses/js/View/View.js"></script>
 <script src="resourses/js/App.js"></script>
 <script src="resourses/js/posts.js"></script>
-<script > app = new App(); app.renderPosts(); </script>
+<!-- <script src="posts.json"></script>-->
+<script> app = new App();
+app.renderPosts();</script>
 </body>
 </html>
