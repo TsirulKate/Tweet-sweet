@@ -1,0 +1,1 @@
+select USER.USER_ID,name,COUNT(POST_ID) from USER join POST on POST.USER_ID=USER.USER_ID where CREATED_AT like '%03-01%' group by POST.USER_ID; 

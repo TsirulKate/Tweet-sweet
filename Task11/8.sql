@@ -1,0 +1,1 @@
+select name from USER join POST on POST.USER_ID=USER.USER_ID where datediff(current_date(),POST.CREATED_AT) = 0 group by POST.USER_ID having count(*) > 3;
